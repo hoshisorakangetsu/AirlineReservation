@@ -19,3 +19,6 @@ School recommend use Netbeans 14
     - Run `.\windowsScript\run` in project root to run project
   - Linux
     - Run `./buildRun` in project root (untested)
+
+# Members
+- [yongyk](https://github.com/yongyk)
