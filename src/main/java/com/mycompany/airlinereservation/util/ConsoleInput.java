@@ -44,4 +44,9 @@ public class ConsoleInput {
     }
     return res.charAt(0);
   }
+
+  public static <T> T getChoice(T[] choices, String prompt) {
+    // TODO: implement the real thing (maybe print the choices and get selection from user)
+    return choices.length <= 0 ? null : choices[0];
+  }
 }
