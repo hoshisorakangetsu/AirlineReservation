@@ -22,3 +22,6 @@ School recommend use Netbeans 14
 
 # Members
 - [yongyk](https://github.com/yongyk)
+- Xuan Bin
+  - [hanyue1014](https://github.com/hanyue1014)
+  - [hoshisorakangetsu](https://github.com/hoshisorakangetsu)
