@@ -1,8 +1,9 @@
 # AirlineReservation
 Degree Sem 3 TAR UMT OOP assignment
 
-# Setup
+# Setup With Netbeans
 School recommend use Netbeans 14
+Just import open this folder with netbeans 14 should work
 
 # Setup use VS Code
 - Install Java Extension Pack
