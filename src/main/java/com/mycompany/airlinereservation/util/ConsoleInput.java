@@ -1,4 +1,4 @@
-package util;
+package com.mycompany.airlinereservation.util;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
