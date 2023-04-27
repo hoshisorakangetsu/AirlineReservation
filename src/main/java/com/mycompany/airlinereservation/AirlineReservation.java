@@ -57,6 +57,7 @@ public class AirlineReservation {
         
         System.out.println("Hello World!");
         String s = ConsoleInput.getString("Test, string please?: ");
+        PrettyPrint.printHorizontalLine(20);
         System.out.println(s);
     }
 }
