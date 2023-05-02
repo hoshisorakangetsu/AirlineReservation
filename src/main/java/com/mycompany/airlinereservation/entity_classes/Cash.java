@@ -19,11 +19,11 @@ public class Cash extends Payment{
         super (paymentDate, amount);
     }
     public String toString (){
-        return String.format("Payment: %.2f\n Date Payment: %s", paymentDate, amount);
+        return super.toString();
     }
      public boolean equals(Object o){
        if (o instanceof Cash){
-           return (paymentDate.equals(((Cash)o).paymentDate));
+           return (super.equals(o));
        }else {
            return false;
        }
