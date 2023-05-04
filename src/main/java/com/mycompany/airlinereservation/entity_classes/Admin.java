@@ -1,5 +1,6 @@
 package com.mycompany.airlinereservation.entity_classes;
 
+import com.mycompany.airlinereservation.util.ArrayUtils;
 import com.mycompany.airlinereservation.util.ChoiceString;
 
 public class Admin extends Account {
@@ -8,12 +9,13 @@ public class Admin extends Account {
         super(username, password);
     }
 
+    // should not be used, but is provided
     public Admin() {
         this("", "");
     }
 
     public static ChoiceString[] getOperations() {
-        return new ChoiceString[] {
+        ChoiceString[] csAdmin = new ChoiceString[] {
             new ChoiceString("Add Airplanes"),
             new ChoiceString("View Airplanes"),
             new ChoiceString("Edit Airplanes"),
@@ -23,18 +25,18 @@ public class Admin extends Account {
             new ChoiceString("Add Flight Schedules"),
             new ChoiceString("View Flight Schedules"),
             new ChoiceString("Edit Flight Schedules"),
-            new ChoiceString("View Account Details"),
             new ChoiceString("Add Customers"),
             new ChoiceString("View Customers"),
-            new ChoiceString("Edit Username"),
-            new ChoiceString("Change Password"),
-            new ChoiceString("Log Out"),
+            new ChoiceString("View Account Details"),
         };
+
+        // combine admin's operations and common account operations
+        return ArrayUtils.appendArray(csAdmin, Account.getOperations());
     }
 
     @Override
     public String toString() {
-        return super.toString() + "Role    : Admin\n";
+        return super.toString() + "Role       : Admin\n";
     }
 
 }

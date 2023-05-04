@@ -1,5 +1,7 @@
 package com.mycompany.airlinereservation.entity_classes;
 
+import com.mycompany.airlinereservation.util.ChoiceString;
+
 public abstract class Account {
 
     private String username;
@@ -37,11 +39,21 @@ public abstract class Account {
         return true;
     }
 
+    // common account operations
+    public static ChoiceString[] getOperations() {
+        return new ChoiceString[] {
+            new ChoiceString("View Account Details"),
+            new ChoiceString("Edit username"),
+            new ChoiceString("Change Password"),
+            new ChoiceString("Log Out"),
+        };
+    }
+
     @Override
     public String toString() {
         return String.format(
-                "Username: %-20s\n" +
-                "Password: %-20s\n",
+                "Username   : %-20s\n" +
+                "Password   : %-20s\n",
                 this.username,
                 this.password.replaceAll(".", "*") // replace every character with *
         );
