@@ -4,6 +4,8 @@
  */
 package com.mycompany.airlinereservation.entity_classes;
 
+import java.util.Date;
+
 /**
  *
  * @author yong
