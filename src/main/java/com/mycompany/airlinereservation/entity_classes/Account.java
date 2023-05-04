@@ -7,12 +7,13 @@ public abstract class Account {
     // override
     private String password;
 
-    Account(String username, String password) {
+    public Account(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
-    Account() {
+    // has the option to instantiate empty, but should not be used
+    public Account() {
         // default to empty string for the values
         this("", "");
     }
@@ -39,8 +40,8 @@ public abstract class Account {
     @Override
     public String toString() {
         return String.format(
-                "Username: %-20s" +
-                        "Password: %-20s",
+                "Username: %-20s\n" +
+                "Password: %-20s\n",
                 this.username,
                 this.password.replaceAll(".", "*") // replace every character with *
         );

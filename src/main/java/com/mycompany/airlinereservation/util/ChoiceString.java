@@ -6,11 +6,11 @@ public class ChoiceString implements Choicer {
 
     // no no-arg constructor for this class as this is a wrapper class for other class
     // so just throw an error if anyone attempts to call this without param
-    ChoiceString() throws NoNoArgConstructorException {
+    public ChoiceString() throws NoNoArgConstructorException {
         throw new NoNoArgConstructorException();
     }
     
-    ChoiceString(String str) {
+    public ChoiceString(String str) {
         this.str = str;
     }
 
