@@ -8,9 +8,15 @@ import java.util.Scanner;
 public class ConsoleInput {
     private static Scanner scanner = new Scanner(System.in);
 
+    // I know it will be needed ;)
+    public static void clearBuffer() {
+        scanner.next();
+    }
+
     // won't appear InputMismatchException, other Exception is unexpected, so cannot
     // handle
     public static String getString(String prompt) {
+        System.out.print(prompt);
         return scanner.nextLine();
     }
 
@@ -46,9 +52,9 @@ public class ConsoleInput {
         return res.charAt(0);
     }
 
-    public static <T> T getChoice(T[] choices, String prompt) {
-        // TODO: implement the real thing (maybe print the choices and get selection
-        // from user)
-        return choices.length <= 0 ? null : choices[0];
+    // returns the number of that choice
+    public static int getChoice(Choicer[] choices, String prompt) {
+        PrettyPrint.printOptions(choices);
+        return ConsoleInput.getInt(prompt);  // instead of using scanner since getInt alrd does validation
     }
 }

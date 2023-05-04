@@ -49,6 +49,15 @@ public abstract class Account {
         };
     }
 
+    // returns the list, in ChoiceString of possible actions that can be carried out before login
+    public static ChoiceString[] getBeforeLoginOptions() {
+        return new ChoiceString[] {
+            new ChoiceString("Login"),
+            new ChoiceString("Register new account"),
+            new ChoiceString("Exit system"),
+        };
+    }
+
     @Override
     public String toString() {
         return String.format(

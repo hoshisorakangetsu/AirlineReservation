@@ -33,6 +33,23 @@ public class ArrayUtils {
         newArrList.addAll(Arrays.asList(arr2));
 
         // this is the reason why we need to surpress warnings of unchecked, as casting Object to generic types can lead to `ClassCastException`
-        return (T[])newArrList.toArray();
+        return (T[]) newArrList.toArray();
+    }
+
+    // appends the object T into array T[]
+    @SuppressWarnings("unchecked")
+    public static <T> T[] appendIntoArray(T[] arr, T obj) {
+        int firstNull = ArrayUtils.indexOf(arr, null);
+        // if the array alrd has empty space
+        if (firstNull != -1) {
+            arr[firstNull] = obj;
+            return arr;
+        } else {
+            // performance isn't concerned, make arr into ArrayList and add obj into the arraylist, convert and return the arraylist as T[]
+            ArrayList<T> arrList = new ArrayList<T>(Arrays.asList(arr));
+            arrList.add(obj);
+
+            return (T[]) arrList.toArray();
+        }
     }
 }

@@ -2,7 +2,7 @@ package com.mycompany.airlinereservation.util;
 
 public class PrettyPrint {
     // only used in here
-    // returns the longest string in an array
+    // returns the longest string in a String array
     private static String longestString(String[] strArr) {
         String currLongest = strArr[0];
 
@@ -75,6 +75,9 @@ public class PrettyPrint {
             System.out.print(PrettyPrint.padRight(choices[i], longest.length()));
             System.out.print(" |");
         }
+
+        // close the "table"
+        PrettyPrint.printHorizontalLine(lineLength);
     }
 
     // not sure if we will need this
@@ -82,5 +85,10 @@ public class PrettyPrint {
     public static void printOptions(Choicer[] ops, String heading) {
         System.out.println(heading);
         PrettyPrint.printOptions(ops);
+    }
+
+    // TODO: implement me if gt time and got use tiok
+    public static void printTable() {
+
     }
 }
