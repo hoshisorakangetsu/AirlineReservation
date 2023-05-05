@@ -42,7 +42,7 @@ public class Reservation {
     }
    public String toString() {
     String result = "";
-    for (String ticket : tickets) {
+    for (PlaneTicket ticket : tickets) {
         result += String.format("Ticket: %s \n Payment : %.2f \n Customer: %s\n", ticket, pay, cust);
     }
     return result;
