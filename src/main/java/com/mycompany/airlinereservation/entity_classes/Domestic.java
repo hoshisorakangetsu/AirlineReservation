@@ -59,29 +59,27 @@ public class Domestic extends PlaneTicket{
             if(passengerIC != null){ //if IC is available then check
                 if(passengerIC.length() == 12){ //is the length 12 then check
                     for(int i = 0; i < passengerIC.length(); i++){ //check is all int
-                        if(passengerIC.charAt(i)<0 || passengerIC.charAt(i)>9){ //if is < 0 or > 9, not int
-                            System.out.println("Invalid IC input.");
+                        if(passengerIC.charAt(i)<'0' || passengerIC.charAt(i)>'9'){ //if is < 0 or > 9, not int, charAt returns char, can just compare between chars for easy handling
                             return false; //return false as fail
                         }else{ //all condition correct
                             return true; //return true as success
                         }
                     }
                 }else{ //length is not 12
-                    System.out.println("The lenght of IC should be 12 character.");
                     return false; //return false as fail
                 }
             }else{ //check passport
                 //create pattern from regex
-                Pattern SingaporeRegex = Pattern.compile("[A-Za-z][0-9]{7}[A-Za-z]");
-                Pattern ChinaRegex = Pattern.compile("[A-Z][0-9]{8,9}");
-                Pattern UKRegex = Pattern.compile("\\d{9}");
-                Pattern MalaysiaRegex = Pattern.compile("[A-Z][0-9]{8}");
+                Pattern singaporeRegex = Pattern.compile("[A-Za-z][0-9]{7}[A-Za-z]");
+                Pattern chinaRegex = Pattern.compile("[A-Z][0-9]{8,9}");
+                Pattern uKRegex = Pattern.compile("\\d{9}");
+                Pattern malaysiaRegex = Pattern.compile("[A-Z][0-9]{8}");
                 
                 //match regex with passport
-                Matcher Singapore = SingaporeRegex.matcher(passengerPassport);
-                Matcher China = ChinaRegex.matcher(passengerPassport);
-                Matcher UK = UKRegex.matcher(passengerPassport);
-                Matcher Malaysia = MalaysiaRegex.matcher(passengerPassport);
+                Matcher singapore = singaporeRegex.matcher(passengerPassport);
+                Matcher china = chinaRegex.matcher(passengerPassport);
+                Matcher uK = uKRegex.matcher(passengerPassport);
+                Matcher malaysia = malaysiaRegex.matcher(passengerPassport);
                 
                 //identify match or not
                 if(Singapore.find())
@@ -96,7 +94,6 @@ public class Domestic extends PlaneTicket{
                     return false;
             }
         }else{ //if IC and Passport is not available then false
-            System.out.println("The IC or Passport is required.");
             return false; //return false as fail
         }
     }
