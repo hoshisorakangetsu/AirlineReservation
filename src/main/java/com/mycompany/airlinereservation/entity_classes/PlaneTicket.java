@@ -71,7 +71,7 @@ public class PlaneTicket {
     }
     
     public String toString(){
-        return String.format("Plane Schedule: %s\nPassenger Name: %s\nPassenger Age: %d\nSeat Type: %s\nPrice: %.2f\n"+sched, passengerName, passengerAge,seatType, price);
+        return String.format("Plane Schedule: %s\nPassenger Name: %s\nPassenger Age: %d\nSeat Type: %s\nPrice: %.2f\n",sched, passengerName, passengerAge,seatType, price);
     }
     
     public boolean equals(Object o){
@@ -84,13 +84,14 @@ public class PlaneTicket {
     
     //method to upgrade the seatType to BUSINESS
     public boolean upgrade(){
+        //check whether is ECONOMY seat type
         if(seatType.equalsIgnoreCase("ECONOMY")){
-            this.seatType = "BUSINESS";
-            this.price = price*1.4;
-            return true;
+            this.seatType = "BUSINESS"; //change to BUSINESS
+            this.price = price*1.4; //increase the price
+            return true; //return as upgrade sucessful
         }else{
             System.out.println("The seat type of the ticket is already is BUSINESS class.");
-            return false;
+            return false; //return as upgrade fail
         }
     }
 }
