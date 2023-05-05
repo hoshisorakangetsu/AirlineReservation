@@ -71,10 +71,18 @@ public class Airport {
     }
     
     public boolean equals(Object o){
-        
+        Airport airport = (Airport)o; //downcasting
+        if(airport.name.equals(name)) //equals()-->String values
+            return true;
+        else
+            return false;
     }
     
     public boolean isSameCountry(Airport airport){
-        
+        Airport countries = (Airport)airport; //downcasting
+        if(countries.country.equals(country)) //equals()-->String values
+            return true;
+        else
+            return false;
     }
 }
