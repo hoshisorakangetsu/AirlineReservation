@@ -82,13 +82,13 @@ public class Domestic extends PlaneTicket{
                 Matcher malaysia = malaysiaRegex.matcher(passengerPassport);
                 
                 //identify match or not
-                if(Singapore.find())
+                if(singapore.find())
                     return true;
-                else if (China.find())
+                else if (china.find())
                     return true;
-                else if (UK.find())
+                else if (uK.find())
                     return true;
-                else if (Malaysia.find())
+                else if (malaysia.find())
                     return true;
                 else
                     return false;
