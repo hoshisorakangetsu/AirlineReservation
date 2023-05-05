@@ -1,5 +1,6 @@
 {
     "java.jdt.ls.java.home": "D:\\tarc-sem3-java\\AirlineReservation\\.dev-kits\\jdk-18.0.1.1",
     "editor.detectIndentation": true,
+    "editor.tabSize": 4,
     "editor.indentSize": 4,
 }
