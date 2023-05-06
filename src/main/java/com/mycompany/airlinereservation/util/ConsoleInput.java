@@ -10,7 +10,8 @@ public class ConsoleInput {
 
     // I know it will be needed ;)
     public static void clearBuffer() {
-        scanner.next();
+        // be more explicit, reinit the scanner object
+        scanner = new Scanner(System.in);
     }
 
     // won't appear InputMismatchException, other Exception is unexpected, so cannot
@@ -45,6 +46,7 @@ public class ConsoleInput {
     }
 
     public static char getChar(String prompt) {
+        System.out.print(prompt);
         String res = scanner.nextLine();
         if (res.length() > 1) {
             System.out.println("Input has more than one character, ignoring the rest...");
@@ -54,7 +56,24 @@ public class ConsoleInput {
 
     // returns the number of that choice
     public static int getChoice(Choicer[] choices, String prompt) {
-        PrettyPrint.printOptions(choices);
-        return ConsoleInput.getInt(prompt);  // instead of using scanner since getInt alrd does validation
+        while (true) {
+            try {
+                PrettyPrint.printOptions(choices);
+                int choice = ConsoleInput.getInt(prompt);  // instead of using scanner since getInt alrd does validation
+                if (choice > choices.length || choice <= 0) {
+                    throw new InputOutOfRangeException(1, choices.length);
+                }
+                return choice;
+            } catch (InputOutOfRangeException ioore) {
+                System.out.println(ioore.getMessage());
+            }
+        }
+    }
+}
+
+// only used in this file, to be thrown when user enters a number outside of the range
+class InputOutOfRangeException extends Exception {
+    InputOutOfRangeException(int min, int max) {
+        super("The given input is out of the range " + min + " " + max);
     }
 }

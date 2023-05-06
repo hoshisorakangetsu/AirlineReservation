@@ -1,6 +1,5 @@
 package com.mycompany.airlinereservation.util;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ArrayUtils {
@@ -23,21 +22,16 @@ public class ArrayUtils {
     }
 
     // assumes all elements in arr1 are not null, and all elements in arr2 are not null
-    @SuppressWarnings("unchecked")
     public static <T> T[] appendArray(T[] arr1, T[] arr2) {
-        // since cannot create array of generic types, will create array list and then convert it back to array and return the array
-        ArrayList<T> newArrList = new ArrayList<T>();
+        // create a new array where the size is arr1+arr2
+        T[] newArr = Arrays.copyOf(arr1, arr1.length + arr2.length);
+        // copy all the arr2 content to the new array
+        System.arraycopy(newArr, 0, newArr, arr1.length, arr2.length);
 
-        // make the array contents into List, which is a Collection, to use the addAll method to put all the content into the ArrayList
-        newArrList.addAll(Arrays.asList(arr1));
-        newArrList.addAll(Arrays.asList(arr2));
-
-        // this is the reason why we need to surpress warnings of unchecked, as casting Object to generic types can lead to `ClassCastException`
-        return (T[]) newArrList.toArray();
+        return newArr;
     }
 
-    // appends the object T into array T[]
-    @SuppressWarnings("unchecked")
+    // appends the object T into array, and returns it as Object[], so need to self cast it back
     public static <T> T[] appendIntoArray(T[] arr, T obj) {
         int firstNull = ArrayUtils.indexOf(arr, null);
         // if the array alrd has empty space
@@ -45,11 +39,10 @@ public class ArrayUtils {
             arr[firstNull] = obj;
             return arr;
         } else {
-            // performance isn't concerned, make arr into ArrayList and add obj into the arraylist, convert and return the arraylist as T[]
-            ArrayList<T> arrList = new ArrayList<T>(Arrays.asList(arr));
-            arrList.add(obj);
-
-            return (T[]) arrList.toArray();
+            // copy the array into a new array with the length is 1 bigger (performance isnt concerned)
+            T[] newArr = Arrays.copyOf(arr, arr.length + 1);
+            newArr[newArr.length - 1] = obj;
+            return newArr;
         }
     }
 }

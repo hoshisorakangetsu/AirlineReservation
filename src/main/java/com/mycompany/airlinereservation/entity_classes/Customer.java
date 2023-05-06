@@ -48,7 +48,7 @@ public class Customer extends Account {
     public String toString() {
         return super.toString() + 
             String.format(
-                "Role       : Customer" + 
+                "Role       : Customer\n" + 
                 "Date Joined: %-20s",
                 new SimpleDateFormat("dd/MMM/yyyy").format(this.dateJoined)
             );

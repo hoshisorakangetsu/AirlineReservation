@@ -2,6 +2,7 @@ package com.mycompany.airlinereservation;
 
 import java.util.Date;
 
+import com.mycompany.airlinereservation.driver.*;
 // every class in entity_classes would be used
 import com.mycompany.airlinereservation.entity_classes.*;
 import com.mycompany.airlinereservation.util.ArrayUtils;
@@ -32,22 +33,47 @@ public class AirlineReservation {
         // Reservation[] reservations = new Reservation[];
         // Payment[] payments = new Payment[];
 
-        // flow
-        // ask user 1. login, 2. register 3. exit system
         while (true) {
-            // if there isn't any logged in account
-            if (loggedInAccount == null) {
-                int beforeLoginChoice = ConsoleInput.getChoice(Account.getBeforeLoginOptions(), "Please enter your choice: ");
-                if (beforeLoginChoice == 3) return;  // yes exit the whole system ;)
+            // flow
+            // check if user is logged in, if not logged in, 
+            // ask user 1. login, 2. register 3. exit system
+            if (!AccountDriver.isLoggedIn()) {
+                int beforeLoginSelection = ConsoleInput.getChoice(
+                    Account.getBeforeLoginOptions(), 
+                    "Please enter your choice: "
+                );
+                ConsoleInput.clearBuffer();
+
+
+                // if is not exit, directly continue from the while loop
+                // the state kept on AccountDriver will let this block not execute next time
+                // if did not continue, still need check is logged in ltr, redundant operation
+                if (beforeLoginSelection != 3) {
+                    AccountDriver.executeOperation(beforeLoginSelection);
+                    continue;
+                } else {
+                    break;  // exit from the loop, technically exits the system as well as there are no more code underneath the big while true loop
+                }
             }
 
-            // show different menu and carry out different actions depending on the logged in user
-            if (loggedInAccount instanceof Customer) {
-                int customerChoice = ConsoleInput.getChoice(Customer.getOperations(), "Please enter your choice: ");
-            } else if (loggedInAccount instanceof Admin) {
-                int adminChoice = ConsoleInput.getChoice(Admin.getOperations(), "Please enter your choice: ");
-            }
+            // if this is reachable then the account should be logged in
+            break; // break for now to prevent infinite loop as bottom implementation havent done
         }
+        
+        // while (true) {
+        //     // if there isn't any logged in account
+        //     if (loggedInAccount == null) {
+        //         int beforeLoginChoice = ConsoleInput.getChoice(Account.getBeforeLoginOptions(), "Please enter your choice: ");
+        //         if (beforeLoginChoice == 3) return;  // yes exit the whole system ;)
+        //     }
+
+        //     // show different menu and carry out different actions depending on the logged in user
+        //     if (loggedInAccount instanceof Customer) {
+        //         int customerChoice = ConsoleInput.getChoice(Customer.getOperations(), "Please enter your choice: ");
+        //     } else if (loggedInAccount instanceof Admin) {
+        //         int adminChoice = ConsoleInput.getChoice(Admin.getOperations(), "Please enter your choice: ");
+        //     }
+        // }
         // if customer
         //      create reservation
         //          select plane sched

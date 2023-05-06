@@ -93,8 +93,9 @@ public class Domestic extends PlaneTicket{
                 else
                     return false;
             }
-        }else{ //if IC and Passport is not available then false
-            return false; //return false as fail
         }
+        
+        //if all the above checks failed
+        return false; //return false as fail
     }
 }

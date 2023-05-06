@@ -73,7 +73,7 @@ public class PrettyPrint {
 
             // print the description part
             System.out.print(PrettyPrint.padRight(choices[i], longest.length()));
-            System.out.print(" |");
+            System.out.print(" |\n");
         }
 
         // close the "table"
@@ -88,7 +88,7 @@ public class PrettyPrint {
     }
 
     // TODO: implement me if gt time and got use tiok
-    public static void printTable() {
+    public static void printDetailsCard() {
 
     }
 }
