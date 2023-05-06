@@ -54,6 +54,7 @@ public class AirlineReservation {
                     AccountDriver.getMenu(),
                     "Please enter your action: "
                 );
+                ConsoleInput.clearBuffer();
             } catch (ShouldNotReachException snre) {
                 System.out.println(snre.getMessage());
                 continue; // if ShouldNotReachExceptionis thrown, 
