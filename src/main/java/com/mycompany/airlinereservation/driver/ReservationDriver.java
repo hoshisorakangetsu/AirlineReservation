@@ -6,6 +6,7 @@ import com.mycompany.airlinereservation.entity_classes.PlaneSchedule;
 import com.mycompany.airlinereservation.entity_classes.Reservation;
 
 public class ReservationDriver {
+    // PLAN: separate PlaneSchedule into it's own driver
     @SuppressWarnings("deprecation")
     private static PlaneSchedule[] schedules = new PlaneSchedule[] {
         new PlaneSchedule(
