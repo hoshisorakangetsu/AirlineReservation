@@ -18,4 +18,8 @@ public class PlaneDriver {
         new Plane(180, "A320", "Airbus", "AirAsia", "AK320-11"),
         new Plane(72, "ATR 72", "Firefly", "Firefly", "FY72-12"),
     };
+
+    public static Plane[] getPlanes() {
+        return planes;
+    }
 }

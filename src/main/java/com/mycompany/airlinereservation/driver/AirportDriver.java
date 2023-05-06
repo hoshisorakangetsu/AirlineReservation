@@ -20,4 +20,8 @@ public class AirportDriver {
         new Airport("Sydney", "New South Wales", "Australia", "SYD", 18),
         new Airport("Dubai", "Dubai", "United Arab Emirates", "DXB", 20),
     };
+
+    public static Airport[] getAirports() {
+        return airports;
+    }
 }
