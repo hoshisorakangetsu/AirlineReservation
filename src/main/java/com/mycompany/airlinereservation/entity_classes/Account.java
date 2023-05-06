@@ -1,12 +1,11 @@
 package com.mycompany.airlinereservation.entity_classes;
 
 import com.mycompany.airlinereservation.util.ChoiceString;
+import com.mycompany.airlinereservation.util.Choicer;
 
-public abstract class Account {
+public abstract class Account implements Choicer {
 
     private String username;
-    // password should not have getter, should not be able to retrieve pw, only
-    // override
     private String password;
 
     public Account(String username, String password) {
@@ -23,6 +22,16 @@ public abstract class Account {
     // getters
     public String getUsername() {
         return this.username;
+    }
+
+    // setters
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    // should not be called directlt, except is admin, but in here we can't check the caller
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     // verifies if the user can login
@@ -73,6 +82,12 @@ public abstract class Account {
         if (!(obj instanceof Account))
             return false;
         return ((Account) obj).username.equals(this.username) && ((Account) obj).password.equals(this.password);
+    }
+
+    @Override
+    public String toChoiceString() {
+        // we can identify an account via its username only as it will be unique
+        return this.username;
     }
 
 }

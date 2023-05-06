@@ -11,6 +11,7 @@ import com.mycompany.airlinereservation.util.ArrayUtils;
 import com.mycompany.airlinereservation.util.ChoiceString;
 import com.mycompany.airlinereservation.util.ConsoleInput;
 import com.mycompany.airlinereservation.util.PrettyPrint;
+import com.mycompany.airlinereservation.util.ShouldNotReachException;
 
 public class AirlineReservation {
 
@@ -47,11 +48,72 @@ public class AirlineReservation {
 
             // if this is reachable then the account should be logged in
             // flow: show user's menu
-            AccountDriver.getMenu();
+            int menuChoice;
+            try {
+                menuChoice = ConsoleInput.getChoice(
+                    AccountDriver.getMenu(),
+                    "Please enter your action: "
+                );
+            } catch (ShouldNotReachException snre) {
+                System.out.println(snre.getMessage());
+                continue; // if ShouldNotReachExceptionis thrown, 
+            }
+            // if err is catched this code will be skipped, so it's safe to assume when the code reaches here, menuChoice will alrd have a value
+            // admin driver handles 10 - 15, main handles 16 - 20 by calling the methods provided by AccountDriver, avoiding directly affecting the state of the AccountDriver
             if (AccountDriver.getLoggedInAccount() instanceof Admin) {
-                AccountDriver.AdminDriver.executeOperation(0);
+                // 10 - 15 handled by AdminDriver
+                if (menuChoice >= 10 && menuChoice <= 15) {
+                    AccountDriver.AdminDriver.executeOperation(menuChoice);
+                    continue;
+                }
+                // 16 - 19 handled by AccountDriver
+                if (menuChoice >= 16 && menuChoice <= 19) {
+                    switch (menuChoice) {
+                        case 16:
+                            AccountDriver.viewAccountDetails();
+                            break;
+                        case 17:
+                            AccountDriver.changeUsername();
+                            break;
+                        case 18:
+                            AccountDriver.changePassword();
+                            break;
+                        case 19:
+                            AccountDriver.logout();
+                            break;
+                    
+                        // should not trigger
+                        default:
+                            break;
+                    }
+                    // done operation, skip to the next iteration of the big while loop to trigger the menu again, let it be login menu (if user logs out) or the normal menu
+                    continue;
+                }
             } else if (AccountDriver.getLoggedInAccount() instanceof Customer) {
-                AccountDriver.CustomerDriver.executeOperation(0);
+                // 1 - 3 handled by ReservationDriver
+                // 4 - 7 handled by AccountDriver
+                if (menuChoice >= 4 && menuChoice <= 7) {
+                    switch (menuChoice) {
+                        case 4:
+                            AccountDriver.viewAccountDetails();
+                            break;
+                        case 5:
+                            AccountDriver.changeUsername();
+                            break;
+                        case 6:
+                            AccountDriver.changePassword();
+                            break;
+                        case 7:
+                            AccountDriver.logout();
+                            break;
+                    
+                        // should not trigger
+                        default:
+                            break;
+                    }
+                    // done operation, skip to the next iteration of the big while loop to trigger the menu again, let it be login menu (if user logs out) or the normal menu
+                    continue;
+                }
             }
             break; // break for now to prevent infinite loop as bottom implementation havent done
         }

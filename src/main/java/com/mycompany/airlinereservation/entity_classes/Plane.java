@@ -4,6 +4,8 @@
  */
 package com.mycompany.airlinereservation.entity_classes;
 
+import com.mycompany.airlinereservation.util.Choicer;
+
 /**
  *
  * @author yong
@@ -11,7 +13,7 @@ package com.mycompany.airlinereservation.entity_classes;
 
 
 
-public class Plane {
+public class Plane implements Choicer {
 
     /**
      * @param args the command line arguments
@@ -69,5 +71,10 @@ public class Plane {
        }else {
            return false;
        }
-   }
+    }
+
+    public String toChoiceString(){
+        // id is unique enough to differentiate a plane
+        return this.id;
+    }
 }

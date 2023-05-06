@@ -25,9 +25,12 @@ public class Admin extends Account {
             new ChoiceString("Add Flight Schedules"),
             new ChoiceString("View Flight Schedules"),
             new ChoiceString("Edit Flight Schedules"),
-            new ChoiceString("Add Customers"),
-            new ChoiceString("View Customers"),
-            new ChoiceString("View Account Details"),
+            new ChoiceString("Add Customer"),
+            new ChoiceString("View Customer"),
+            new ChoiceString("Edit Customer"),
+            new ChoiceString("Add Admins"),
+            new ChoiceString("View Admin"),
+            new ChoiceString("Edit Admin"),
         };
 
         // combine admin's operations and common account operations

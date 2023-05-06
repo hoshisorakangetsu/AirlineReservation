@@ -4,17 +4,21 @@
  */
 package com.mycompany.airlinereservation.entity_classes;
 
+import com.mycompany.airlinereservation.util.Choicer;
+
 /**
  *
  * @author Neoh Soon Chee
  */
-public class PlaneTicket {
+public class PlaneTicket implements Choicer {
     //variable
+    private String id;
     private PlaneSchedule sched;
     private String seatType;
     private String passengerName;
     private int passengerAge;
     private double price;
+    private static int assignedId = 1001;
     
     //method
     
@@ -26,6 +30,7 @@ public class PlaneTicket {
         this.passengerName = passengerName;
         this.passengerAge = passengerAge;
         this.price = price;
+        this.id = "T" + assignedId;
     }
     
     //setter
@@ -71,7 +76,7 @@ public class PlaneTicket {
     }
     
     public String toString(){
-        return String.format("Plane Schedule: %s\nPassenger Name: %s\nPassenger Age: %d\nSeat Type: %s\nPrice: %.2f\n",sched, passengerName, passengerAge,seatType, price);
+        return String.format("Plane Schedule: %s\nPassenger Name: %s\nPassenger Age: %d\nSeat Type: %s\nPrice: %.2f",sched, passengerName, passengerAge,seatType, price);
     }
     
     public boolean equals(Object o){
@@ -80,6 +85,11 @@ public class PlaneTicket {
             return true;
         else
             return false;
+    }
+
+    public String toChoiceString() {
+        // only id is unique enough to determine the which ticket
+        return this.id;
     }
     
     //method to upgrade the seatType to BUSINESS

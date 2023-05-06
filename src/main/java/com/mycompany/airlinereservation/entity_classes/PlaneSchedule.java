@@ -4,12 +4,15 @@
  */
 package com.mycompany.airlinereservation.entity_classes;
 
+import java.text.SimpleDateFormat;
 /**
  *
  * @author user
  */
 import java.util.Date;
-public class PlaneSchedule {
+
+import com.mycompany.airlinereservation.util.Choicer;
+public class PlaneSchedule implements Choicer {
     private double baggageAllowance;
     private Date flightDate;
     private Airport src;
@@ -87,5 +90,13 @@ public class PlaneSchedule {
             return true;
         else
             return false;
+    }
+
+    public String toChoiceString(){
+        // return every single details that are needed to the user for them to make a choice and differentiate between schedules
+        return 
+            new SimpleDateFormat("dd/MMM/yyyy").format(flightDate) + 
+            this.src + " - " + this.dest +
+            this.plane.getId();
     }
 }

@@ -26,7 +26,7 @@ public class ArrayUtils {
         // create a new array where the size is arr1+arr2
         T[] newArr = Arrays.copyOf(arr1, arr1.length + arr2.length);
         // copy all the arr2 content to the new array
-        System.arraycopy(newArr, 0, newArr, arr1.length, arr2.length);
+        System.arraycopy(arr2, 0, newArr, arr1.length, arr2.length);
 
         return newArr;
     }

@@ -87,8 +87,8 @@ public class PrettyPrint {
         PrettyPrint.printOptions(ops);
     }
 
-    // TODO: implement me if gt time and got use tiok
-    public static void printDetailsCard() {
-
+    // TODO: implement me if gt time and got use tiok, don't just use toString(), do smtg with the string
+    public static void printDetailsCard(Object o) {
+        System.out.println(o.toString());
     }
 }

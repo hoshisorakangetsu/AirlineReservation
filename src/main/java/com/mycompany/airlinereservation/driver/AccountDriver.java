@@ -7,7 +7,11 @@ import com.mycompany.airlinereservation.entity_classes.Account;
 import com.mycompany.airlinereservation.entity_classes.Admin;
 import com.mycompany.airlinereservation.entity_classes.Customer;
 import com.mycompany.airlinereservation.util.ArrayUtils;
+import com.mycompany.airlinereservation.util.ChoiceString;
+import com.mycompany.airlinereservation.util.Choicer;
 import com.mycompany.airlinereservation.util.ConsoleInput;
+import com.mycompany.airlinereservation.util.PrettyPrint;
+import com.mycompany.airlinereservation.util.ShouldNotReachException;
 
 public class AccountDriver {
 
@@ -84,15 +88,38 @@ public class AccountDriver {
             }
         }
     }
-
-    public static void getMenu() {
+    
+    public static ChoiceString[] getMenu() throws ShouldNotReachException {
         if (loggedInAccount instanceof Admin) {
-            Admin.getOperations();
+            return Admin.getOperations();
         } else if (loggedInAccount instanceof Customer) {
-            Customer.getOperations();
+            return Customer.getOperations();
         }
+        
+        throw new ShouldNotReachException();
+    }
+    
+    public static void changePassword() {
+        String oriPassword, newPassword;
+        do {
+            oriPassword = ConsoleInput.getString("Enter original password: ");
+            newPassword = ConsoleInput.getString("Enter new password: ");
+            // loop until change password successfully
+        } while (!loggedInAccount.changePassword(oriPassword, newPassword));
+        System.out.println("Password changed successfully!");
     }
 
+    public static void viewAccountDetails() {
+        PrettyPrint.printDetailsCard(loggedInAccount);
+    }
+
+    public static void changeUsername() {
+        String newUsername = ConsoleInput.getString("Enter your desired new username: ");
+        loggedInAccount.setUsername(newUsername);
+        System.out.println("New username '" + loggedInAccount.getUsername() + "' successfully set!");
+    }
+    
+    // handles login and register only
     public static void executeOperation(int choice) {
         if (choice == 1) {
             login();
@@ -105,19 +132,128 @@ public class AccountDriver {
         loggedInAccount = null;  // stop pointing to that account, will auto logout, thts the purpose of keeping the state
     }
 
+    public static Choicer[] getAccounts(String filter) {
+        // performance isn't concerned, just create an array with length 1 (there will always be at least one customer or admin) and keep inserting into it
+        Choicer[] res = new Choicer[1];
+
+        for (Account a : userAccounts) {
+            if (a instanceof Customer && filter.equals("CUSTOMER")) {
+                res = ArrayUtils.appendIntoArray(res, a);
+            } else if (a instanceof Admin && filter.equals("ADMIN")) {
+                res = ArrayUtils.appendIntoArray(res, a);
+            }
+        }
+
+        return res;
+    }
+
     // nested class, as Admin is one of Account as well, so placing the driver here makes sense
+    // but it only handles operations like customer details and add new admin or edit admins
+    // operations like edit flight or add flight will be handled by respective driver classes
     public static class AdminDriver {
         public static void executeOperation(int ops) {
+            switch (ops) {
+                // add customer and admin got similar flow at first, so can grup them tgt
+                // 10 - Add Customer, 13 - Add Admin
+                case 10:
+                case 13:
+                    enterUsername: // label to quit and ask admin to put another username in case username crashed
+                    while (true) {
+                        String username = ConsoleInput.getString("Enter new username: ");
+                        for (Account a : userAccounts) {
+                            if (a.getUsername().equals(username)) {
+                                System.out.println("Username repeated, please select another one");
+                                continue enterUsername;
+                            }
+                        }
 
+                        String password = ConsoleInput.getString("Enter a password: ");
+
+                        // create account
+                        Account newAcc = null;
+                        if (ops == 10) {
+                            newAcc = new Customer(username, password);
+                        } else if (ops == 13) {
+                            newAcc = new Admin(username, password);
+                        }
+                        userAccounts = ArrayUtils.appendIntoArray(userAccounts, newAcc);
+
+                        // finished business, exit from this function and return to main flow
+                        return;
+                    }
+                // I want this to have own variable scope, lazy think too many variable names
+                case 11: {
+                    // View Customer
+                    // flow: show customers in a list of choices, ask which customer to view in detail
+                    Choicer[] custs = AccountDriver.getAccounts("CUSTOMER");
+                    int custSelected = ConsoleInput.getChoice(
+                        custs, 
+                        "Which customer to view in detail: "
+                    );
+                    PrettyPrint.printDetailsCard(custs[custSelected - 1]);
+                    break;
+                }
+                // 12 - Edit customer, 15 - edit admin, they both got same implementation
+                case 12:
+                case 15: {
+                    // flow: show customers in a list of choices, ask which customer to edit
+                    Choicer[] accs = AccountDriver.getAccounts(ops == 12 ? "CUSTOMER" : "ADMIN");
+                    int accSelected = ConsoleInput.getChoice(
+                        accs, 
+                        String.format("Which %s to edit: ", ops == 12 ? "CUSTOMER" : "ADMIN")
+                    );
+                    // performance isn't concerned, find the original Customer from userAccounts
+                    // if not found (which shudn't be, just exit as not possible to continue)
+                    int accIndex = ArrayUtils.indexOf(userAccounts, accs[accSelected - 1]);
+                    if (accIndex < 0 || accIndex > userAccounts.length) {
+                        System.out.println("Account not found");
+                        return;
+                    }
+                    Account account = userAccounts[accIndex];
+                    String newUsername;
+                    usernameRepeat:
+                    while (true) {
+                        newUsername = ConsoleInput.getString("Enter new username (leave blank to not change): ");
+                        if (newUsername.isEmpty()) {
+                            break;
+                        }
+                        for (Account a : userAccounts) {
+                            if (a.getUsername().equals(newUsername)) {
+                                System.out.println("Duplicate username, please select another one");
+                                continue usernameRepeat;
+                            }
+                        }
+                        break;
+                    }
+                    if (!newUsername.isEmpty()) {
+                        account.setUsername(newUsername);
+                    }
+                    String newPassword = ConsoleInput.getString("Enter new password (leave blank to not change)");
+                    if (!newUsername.isEmpty()) {
+                        account.setPassword(newPassword);
+                    }
+                    System.out.printf("%s edited successfully!", ops == 12 ? "CUSTOMER" : "ADMIN");
+                    break;
+                }
+                case 14: {
+                    // View Admin
+                    // flow: show admin in a list of choices, ask which admin to view in detail
+                    Choicer[] admins = AccountDriver.getAccounts("ADMIN");
+                    int adminSelected = ConsoleInput.getChoice(
+                        AccountDriver.getAccounts("ADMIN"), 
+                        "Which admin to view in detail: "
+                    );
+                    PrettyPrint.printDetailsCard(admins[adminSelected - 1]);
+                    break;
+                }
+
+                // should not reach
+                default:
+                    break;
+            }
         }
     }
 
-    // nested class, as Customer is one of Account as well, so placing the driver here makes sense
-    public static class CustomerDriver {
-        public static void executeOperation(int ops) {
-
-        }
-    }
 }
 
 // only used in this file, used to continue the while loop of ask user get details if the username has been taken
