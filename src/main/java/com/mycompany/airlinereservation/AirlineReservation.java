@@ -4,26 +4,15 @@ import java.util.Date;
 
 import com.mycompany.airlinereservation.driver.*;
 // every class in entity_classes would be used
-import com.mycompany.airlinereservation.entity_classes.*;
+import com.mycompany.airlinereservation.entity_classes.Account;
+import com.mycompany.airlinereservation.entity_classes.Admin;
+import com.mycompany.airlinereservation.entity_classes.Customer;
 import com.mycompany.airlinereservation.util.ArrayUtils;
 import com.mycompany.airlinereservation.util.ChoiceString;
 import com.mycompany.airlinereservation.util.ConsoleInput;
 import com.mycompany.airlinereservation.util.PrettyPrint;
 
 public class AirlineReservation {
-    
-    // these are common states that all the flows share, in an OOP context, they should not be defined in the main function and passed around, that is more like functional approach
-    // since OOP allows for encapsulation, these aren't really count as Global Variables, as these are still only accessible in this class
-    // default we will have one customer and one admin, we will allow more customer to be registered
-    // this date constructor is deprecated but achieves what we want easily, so we will keep using it for now
-    @SuppressWarnings("deprecation")
-    private static Account[] userAccounts = new Account[] {
-        new Customer("JohnDoe", "securePassword", new Date(2000, 10, 3)),
-        new Admin("admin", "root"),
-    };
-
-    // keeps track of the logged in user
-    private static Account loggedInAccount;
 
     public static void main(String[] args) {
         // Plane[] planes = new Plane[];
@@ -57,6 +46,13 @@ public class AirlineReservation {
             }
 
             // if this is reachable then the account should be logged in
+            // flow: show user's menu
+            AccountDriver.getMenu();
+            if (AccountDriver.getLoggedInAccount() instanceof Admin) {
+                AccountDriver.AdminDriver.executeOperation(0);
+            } else if (AccountDriver.getLoggedInAccount() instanceof Customer) {
+                AccountDriver.CustomerDriver.executeOperation(0);
+            }
             break; // break for now to prevent infinite loop as bottom implementation havent done
         }
         
@@ -120,60 +116,4 @@ public class AirlineReservation {
         // System.out.println(s);
     }
 
-    // the whole flow to login an account
-    static void login() {
-        // yes keep asking, if the credentials matched or user dw to try again, the function will return and exit
-        while (true) {
-            // ask for username and password
-            String username = ConsoleInput.getString("Please enter username: ");
-            String password = ConsoleInput.getString("Please enter password: ");
-    
-            // check if any accounts matched
-            for (Account a : userAccounts) {
-                if (a.verifyCredentials(username, password)) {
-                    loggedInAccount = a;
-                    return;
-                }
-            }
-
-            // return from function if user dw to try again
-            if(
-                Character.toLowerCase(
-                    ConsoleInput.getChar("Invalid credentials, try again? [Y/n]: ")
-                ) != 'y'
-            ) return;
-        }
-    }
-
-    static void register() {
-        contForReregister:  // label used to make the whole process start again when username is occupied
-        while (true) {
-            String username = ConsoleInput.getString("Enter a username: ");
-            // check if username is alrd occupied
-            for (Account a : userAccounts) {
-                if (a.getUsername().equals(username)) {
-                    System.out.println("Username has already been taken, please select another one");
-                    continue contForReregister;
-                }
-            }
-            String password, reenterPassword;
-            do {
-                password = ConsoleInput.getString("Please enter password: ");
-                reenterPassword = ConsoleInput.getString("Please reenter password: ");
-
-                if (password != reenterPassword) {
-                    System.out.println("Two passwords are different, please check");
-                }
-            } while (password != reenterPassword);
-
-            // register a customer account for the user, admin accounts should never be able to be registered on its own
-            Customer newCust = new Customer(username, password);
-            ArrayUtils.appendIntoArray(userAccounts, newCust);
-            return;  // done registering, return from the function
-        }
-    }
-
-    static void logout() {
-        loggedInAccount = null;  // stop pointing to that account, will auto logout, thts the purpose of keeping the state
-    }
 }

@@ -24,6 +24,10 @@ public class AccountDriver {
         return loggedInAccount != null;
     }
 
+    public static Account getLoggedInAccount() {
+        return loggedInAccount;
+    }
+
     // the whole flow to login an account
     public static void login() {
         // yes keep asking, if the credentials matched or user dw to try again, the function will return and exit
@@ -103,12 +107,16 @@ public class AccountDriver {
 
     // nested class, as Admin is one of Account as well, so placing the driver here makes sense
     public static class AdminDriver {
+        public static void executeOperation(int ops) {
 
+        }
     }
 
     // nested class, as Customer is one of Account as well, so placing the driver here makes sense
     public static class CustomerDriver {
+        public static void executeOperation(int ops) {
 
+        }
     }
 }
 
