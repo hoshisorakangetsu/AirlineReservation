@@ -61,10 +61,10 @@ public class Domestic extends PlaneTicket{
                     for(int i = 0; i < passengerIC.length(); i++){ //check is all int
                         if(passengerIC.charAt(i)<'0' || passengerIC.charAt(i)>'9'){ //if is < 0 or > 9, not int, charAt returns char, can just compare between chars for easy handling
                             return false; //return false as fail
-                        }else{ //all condition correct
-                            return true; //return true as success
                         }
                     }
+                    // all is between 0 - 9
+                    return true;
                 }else{ //length is not 12
                     return false; //return false as fail
                 }
