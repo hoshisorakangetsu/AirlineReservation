@@ -51,7 +51,7 @@ public class ConsoleInput {
         while (true) {
             try {
                 int res = getInt(prompt);
-                if (res >= min || res <= max) {
+                if (res >= min && res <= max) { 
                     return res;
                 }
                 throw new InputOutOfRangeException(min, max);
