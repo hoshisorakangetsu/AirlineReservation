@@ -31,6 +31,7 @@ public abstract class PlaneTicket implements Choicer {
         this.passengerAge = passengerAge;
         this.price = price;
         this.id = "T" + assignedId;
+        assignedId++;
     }
     
     //setter
@@ -81,7 +82,7 @@ public abstract class PlaneTicket implements Choicer {
     
     public boolean equals(Object o){
         PlaneTicket planeTicket = (PlaneTicket)o;
-        if(planeTicket.sched.equals(sched))
+        if(planeTicket.id.equals(id))
             return true;
         else
             return false;
@@ -89,7 +90,7 @@ public abstract class PlaneTicket implements Choicer {
 
     public String toChoiceString() {
         // only id is unique enough to determine the which ticket
-        return this.id;
+        return this.id + ": " + this.passengerName;
     }
     
     //method to upgrade the seatType to BUSINESS

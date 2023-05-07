@@ -13,6 +13,7 @@ import com.mycompany.airlinereservation.entity_classes.PlaneTicket;
 import com.mycompany.airlinereservation.entity_classes.Reservation;
 import com.mycompany.airlinereservation.util.ArrayUtils;
 import com.mycompany.airlinereservation.util.ConsoleInput;
+import com.mycompany.airlinereservation.util.PrettyPrint;
 import com.mycompany.airlinereservation.util.ShouldNotReachException;
 
 public class ReservationDriver {
@@ -130,6 +131,7 @@ public class ReservationDriver {
     public static void makeReservation() throws NoAccessException {
         // can get the customer (which is currently logged in) from AccountDriver
         Account currentUser = AccountDriver.getLoggedInAccount();
+        // very unlikely to happen
         if (!(currentUser instanceof Customer))
             throw new NoAccessException(currentUser);
         
@@ -206,6 +208,21 @@ public class ReservationDriver {
         Reservation newReservation = new Reservation(tickets, p, currentCustomer);
         reservations = ArrayUtils.appendIntoArray(reservations, newReservation);
         System.out.println("Reservation successfully made!");
+    }
+
+    public static void viewReservationCust() throws NoAccessException {
+        Account currentUser = AccountDriver.getLoggedInAccount();
+        // very unlikely to happen
+        if (!(currentUser instanceof Customer))
+            throw new NoAccessException(currentUser);
+        
+        // here we can already be sure currentUser is Customer
+        Customer currentCustomer = (Customer) currentUser;
+
+        Reservation[] resMadeByCust = getReservationByCustomer(currentCustomer);
+        int choice = ConsoleInput.getChoice(resMadeByCust, "Which reservation to view?");
+
+        PrettyPrint.printDetailsCard(resMadeByCust[choice - 1]);
     }
 
     // lazy make another file for this, this exception only will be thrown in this class anyways

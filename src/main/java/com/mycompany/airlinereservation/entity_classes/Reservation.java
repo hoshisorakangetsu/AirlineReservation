@@ -15,9 +15,12 @@ import com.mycompany.airlinereservation.util.Choicer;
  */
 public class Reservation implements Choicer {
     private PlaneTicket[] tickets;
+    private String id; 
     private Payment pay;
     private Customer cust;
     private Date dateCreated;
+    private static int currentID = 1001;
+
     public Reservation (){
         
     }
@@ -26,6 +29,8 @@ public class Reservation implements Choicer {
         this.pay=pay;
         this.cust=cust;
         this.dateCreated=new Date();
+        this.id = "R" + currentID;
+        currentID++;
     }
     public PlaneTicket[] getPlaneTicket(){
         return tickets;
@@ -63,7 +68,7 @@ public class Reservation implements Choicer {
     }
    public boolean equals(Object o){
        if (o instanceof Reservation ){
-           return (cust.equals(((Reservation)o).cust));
+           return (id.equals(((Reservation) o).id));
        }else {
            return false;
        }

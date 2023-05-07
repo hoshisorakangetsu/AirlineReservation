@@ -36,7 +36,7 @@ public class Customer extends Account {
     public static ChoiceString[] getOperations() {
         ChoiceString[] csCust = new ChoiceString[] {
             new ChoiceString("Make reservation"),
-            new ChoiceString("View Reservations"),
+            new ChoiceString("View Reservation"),
             new ChoiceString("Edit Reservation"),
         };
 
