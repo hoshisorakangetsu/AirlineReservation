@@ -62,7 +62,7 @@ public class ConsoleInput {
         while (true) {
             try {
                 // if user didnt provide prompt use the default prompt
-                System.out.println(prompt == null ? "Please enter a date (dd/mm/yyyy): " : prompt);
+                System.out.print(prompt == null ? "Please enter a date (dd/mm/yyyy): " : prompt);
                 String inDate = scanner.nextLine();
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -77,7 +77,7 @@ public class ConsoleInput {
     public static Date getDateTime(String prompt) {
         while (true) {
             try {
-                System.out.println(
+                System.out.print(
                     prompt == null 
                         ? "Please enter a date time (dd/MM/yyyy HH:mm): " 
                         : prompt

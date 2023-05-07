@@ -80,8 +80,11 @@ public class PlaneSchedule implements Choicer {
     }
     
     public String toString(){
-        return String.format("Baggae Allowance : RM%.2f\nFlight Date : %s"
-                ,baggageAllowance,flightDate);
+        return String.format(
+            "Baggage Allowance : %.2fkg\nFlight Date Time : %s\nFrom : \n%s\nTo : \n%s\nPlane : \n%s\nVisa Required : \n%s\n", 
+            baggageAllowance,
+            new SimpleDateFormat("dd/MMM/yyyy HH:mm").format(flightDate),
+            src.toString(), dest.toString(), plane.toString(), visaRequired ? "yes" : "no");
     }
     
     public boolean equals(Object o){
@@ -95,8 +98,8 @@ public class PlaneSchedule implements Choicer {
     public String toChoiceString(){
         // return every single details that are needed to the user for them to make a choice and differentiate between schedules
         return 
-            new SimpleDateFormat("dd/MMM/yyyy").format(flightDate) + 
-            this.src + " - " + this.dest +
+            new SimpleDateFormat("dd/MMM/yyyy HH:mm").format(flightDate) + " " +
+            this.src + " - " + this.dest + " " +
             this.plane.getId();
     }
 }
