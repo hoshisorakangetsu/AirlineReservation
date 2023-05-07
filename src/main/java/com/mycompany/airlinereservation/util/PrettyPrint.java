@@ -21,6 +21,21 @@ public class PrettyPrint {
         return String.format("%-" + n + "s", s);
     }
 
+    public static String centerString(String s, int n) {
+        int spaceSize = n - s.length();
+        int prefixSize = spaceSize / 2;
+        int suffixSize = (spaceSize + 1) / 2;
+
+        if (prefixSize != 0 && suffixSize != 0)
+           return String.format("%" + prefixSize + "s%s%" + suffixSize + "s", "", s, "");
+        else if (prefixSize == 0 && suffixSize != 0)
+            return String.format("%s%" + suffixSize + "s", "", s, "");
+        else if (prefixSize != 0 && suffixSize == 0)
+            return String.format("%" + prefixSize + "s%s", "", s, "");
+        else
+            return s;
+    }
+
     // print a horizontal line consist of `chars` '='s
     public static void printHorizontalLine(int chars) {
         System.out.println(String.format("%" + chars + "s", " ").replace(" ", "="));
@@ -87,8 +102,28 @@ public class PrettyPrint {
         PrettyPrint.printOptions(ops);
     }
 
-    // TODO: implement me if gt time and got use tiok, don't just use toString(), do smtg with the string
     public static void printDetailsCard(Object o) {
-        System.out.println(o.toString());
+        // System.out.println(o.toString());
+        // want to format it like a card, with the class name in the center on the header row
+        String objClass = o.getClass().getSimpleName();
+        String[] properties = o.toString().split("\n");
+        String[] getMaxLengthArr = new String[properties.length + 1];
+        System.arraycopy(properties, 0, getMaxLengthArr, 0, properties.length);
+        getMaxLengthArr[getMaxLengthArr.length - 1] = objClass;
+        // find padding for each row
+        int sPad = PrettyPrint.longestString(getMaxLengthArr).length();
+        int horizontalWidth = sPad + 4; // + '| ' + ' |'
+
+        // header part
+        PrettyPrint.printHorizontalLine(horizontalWidth);
+        System.out.println("| " + PrettyPrint.centerString(objClass, sPad) + " |");
+        PrettyPrint.printHorizontalLine(horizontalWidth);
+
+        // print the contents inside
+        for (String s : properties) {
+            System.out.println("| " + PrettyPrint.padRight(s, sPad) + " |");
+        }
+        // close the "card"
+        PrettyPrint.printHorizontalLine(horizontalWidth);
     }
 }

@@ -16,6 +16,7 @@ public abstract class PlaneTicket implements Choicer {
     private PlaneSchedule sched;
     private String seatType;
     private String passengerName;
+    private String passengerPassport;
     private int passengerAge;
     private double price;
     private static int assignedId = 1001;
@@ -24,12 +25,13 @@ public abstract class PlaneTicket implements Choicer {
     
     public PlaneTicket() {}
     
-    public PlaneTicket(PlaneSchedule sched, String seatType, String passengerName, int passengerAge, double price){
+    public PlaneTicket(PlaneSchedule sched, String seatType, String passengerName, int passengerAge, double price, String passengerPassport){
         this.sched = sched;
         this.seatType = seatType;
         this.passengerName = passengerName;
         this.passengerAge = passengerAge;
         this.price = price;
+        this.passengerPassport = passengerPassport;
         this.id = "T" + assignedId;
         assignedId++;
     }
@@ -54,6 +56,10 @@ public abstract class PlaneTicket implements Choicer {
     public void setPrice(double price){
         this.price = price;
     }
+
+    public void setPassengerPassport(String passengerPassport){
+        this.passengerPassport = passengerPassport;
+    }
     
     //getter
     public PlaneSchedule getSched(){
@@ -74,6 +80,10 @@ public abstract class PlaneTicket implements Choicer {
     
     public double getPrice(){
         return price;
+    }
+
+    public String getPassengerPassport(){
+        return passengerPassport;
     }
     
     public String toString(){

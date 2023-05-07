@@ -52,7 +52,7 @@ public class AirportDriver {
             break;
         }
         int numberOfGates = ConsoleInput.getInt("Enter number of gates: ");
-        ConsoleInput.clearBuffer();
+        ConsoleInput.reInit();
 
         // create the new airport
         Airport newAirport = new Airport(location, state, country, name, numberOfGates);
@@ -61,7 +61,7 @@ public class AirportDriver {
 
     public static void viewAirport() {
         int choice = ConsoleInput.getChoice(airports, "Enter number of airport to view in detail: ");
-        ConsoleInput.clearBuffer();
+        ConsoleInput.reInit();
         PrettyPrint.printDetailsCard(airports[choice - 1]);
         // block until user decides everything is ok
         ConsoleInput.getString("Press [enter] to continue");
@@ -69,7 +69,7 @@ public class AirportDriver {
 
     public static void editAirport() {
         int choice = ConsoleInput.getChoice(airports, null);
-        ConsoleInput.clearBuffer();
+        ConsoleInput.reInit();
         Airport airportToEdit = airports[choice - 1];
         String location = ConsoleInput.getString("Enter the location (leave empty to not change): ");
         String state = ConsoleInput.getString("Enter the state (leave empty to not change): ");
@@ -95,7 +95,7 @@ public class AirportDriver {
                 airportToEdit.getNumberOfGates()
             )
         );
-        ConsoleInput.clearBuffer();
+        ConsoleInput.reInit();
 
         if (!location.isBlank())
             airportToEdit.setLocation(location);

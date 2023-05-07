@@ -152,7 +152,7 @@ public class ReservationDriver {
         // ask how many passengers (create the same number of ticket for it)
         // Not urgent, time's running out, if got time: check if the number do not exceed the plane's capacity - reservation's ticket number
         int passengerNum = ConsoleInput.getInt("How many passengers: ");
-        ConsoleInput.clearBuffer();
+        ConsoleInput.reInit();
 
         // not separating this chunk of code out because can boost performance (use one for loop to perform create tickets and add the sum of the price at once)
         PlaneTicket[] tickets;
@@ -171,7 +171,7 @@ public class ReservationDriver {
             PlaneTicket pt;
             String passengerName = ConsoleInput.getString("Enter passenger name: ", false);
             int passengerAge = ConsoleInput.getInt("Enter passenger age: ");
-            ConsoleInput.clearBuffer();
+            ConsoleInput.reInit();
             double price = selectedSchedule.getBasePrice();
             boolean isBusinessClass = Character.toLowerCase(
                 ConsoleInput.getChar("Upgrade to business class (add 40% to the base ticket price)? [y/N]: ")
@@ -247,7 +247,7 @@ public class ReservationDriver {
                 new ChoiceString("Make Payment"),
             };
             int choice2 = ConsoleInput.getChoice(choices, "Enter your choice: ");
-            ConsoleInput.clearBuffer();
+            ConsoleInput.reInit();
             if (choice2 == 2){
                 makePayment(resToEdit.getPay());  // made possible by java reference <33333333
                 return;
@@ -257,17 +257,86 @@ public class ReservationDriver {
         // display all the tickets in the reservation
         PlaneTicket[] tickets = resToEdit.getTickets();
         int ticketToEditIdx = ConsoleInput.getChoice(tickets, "Which ticket to edit: ");
+        ConsoleInput.reInit();
+        // deduct the price from the payment first, in case user want to upgrade ticket
+        // this way of handling is better than the other way which requires to loop over the array agn to add the total
+        resToEdit.getPay().setAmount(
+            resToEdit.getPay().getAmount() - tickets[ticketToEditIdx - 1].getPrice()
+        );
         editTicket(tickets[ticketToEditIdx - 1]);  // <3 u java references
+        // add back the price
+        resToEdit.getPay().setAmount(
+            resToEdit.getPay().getAmount() + tickets[ticketToEditIdx - 1].getPrice()
+        );
     }
 
     public static void editTicket(PlaneTicket pt) {
-        // business rule: if previous is paid using card or ewallet, prompt user that their balance will be deducted if they upgrade, if is paid via cash, tell them to pay on the spot
+        // ask everything haha
+        String passengerName = ConsoleInput.getString("Enter passenger name (leave empty to not change): ");
+        int passengerAge = ConsoleInput.getInt(
+            String.format("Enter passenger age (Current: %d): ", pt.getPassengerAge())
+        );
+        ConsoleInput.reInit();
+
+        if (!passengerName.isBlank())
+            pt.setPassengerName(passengerName);
+        pt.setPassengerAge(passengerAge);
+
+        System.out.println("You will be charged if you were to change the following documents");
+        boolean hasChanged = false;
+        do {
+            String passport = ConsoleInput.getString("Enter passport(leave blank to not change): ");
+            if (!passport.isBlank()) {
+                pt.setPassengerPassport(passport);
+                hasChanged = true;
+            }
+            if (pt instanceof Domestic) {
+                String ic = ConsoleInput.getString("Enter IC (leave blank to not change): ");
+                if (ic.isBlank())
+                    break;
+                // if this code was executed means either ic or passport or both is not blank
+                hasChanged = true;
+                if (!ic.isBlank())
+                    ((Domestic) pt).setPassengerIC(ic);
+            } else if (pt instanceof International) {
+                String visa = ConsoleInput.getString("Enter VISA (leave blank to not change): ");
+                if (visa.isBlank())
+                    break;
+                // if this code was executed means either ic or passport or both is not blank
+                hasChanged = true;
+                if (!visa.isBlank())
+                    ((International) pt).setPassengerVisa(visa);
+            }
+        } while (!pt.verifyDocuments());
+        // business rule: if previous is paid using card or ewallet, prompt user that their balance will be deducted if they are to be charged, if is paid via cash, tell them to pay on the spot
+        if (hasChanged) {
+            System.out.printf(
+                "You have made changes to the ticket that is equivalent of an ownership transfer, please pay RM%.2f, \nIf you paid with EWallet or Card previously, please disregard this message as your balance will be automatically deducted\nThanks for your understanding\n",
+                pt.getPrice() * 0.8
+            );
+        }
+
+        if (pt.getSeatType().equals("ECONOMY")) {
+            boolean upgrade = Character.toLowerCase(
+                ConsoleInput.getChar("Do you want to upgrade this ticket to business class? [y/N]: ")
+            ) == 'n';
+            if (upgrade) {
+                double oldPrice = pt.getPrice();
+                if (pt.upgrade()) {
+                    System.out.println("Ticket upgraded to business class");
+                    System.out.printf(
+                        "Please pay additional RM%.2f\nIf you paid with EWallet or Card previously, please disregard this message as your balance will be automatically deducted\nThanks for your understanding\n", 
+                        oldPrice * 0.4
+                    );
+                }
+            }
+        }
     }
 
     // lazy make another file for this, this exception only will be thrown in this class anyways
     public static class NoAccessException extends Exception {
         public NoAccessException(Account a) {
-            super("Account " + a.getUsername() + " of role " + a.getClass().getName() + " have no access over this function");
+            super("Account " + a.getUsername() + " of role " + a.getClass().getSimpleName() + " have no access over this function");
         }
     }
 

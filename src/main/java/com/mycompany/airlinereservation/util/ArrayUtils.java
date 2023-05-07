@@ -14,7 +14,8 @@ public class ArrayUtils {
                 return i;
 
             // last resort, use the object's equals, which can have diff implements for objects of diff reference but should equal to each other
-            if (objArr[i].equals(obj))
+            // if looking for null then above code shud alrd checked for null
+            if (obj != null && objArr[i].equals(obj))
                 return i;
         }
 

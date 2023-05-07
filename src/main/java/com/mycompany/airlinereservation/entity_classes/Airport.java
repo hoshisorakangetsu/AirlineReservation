@@ -73,6 +73,8 @@ public class Airport implements Choicer {
     }
     
     public boolean equals(Object o){
+        if (!(o instanceof Airport))
+            return false;
         Airport airport = (Airport)o; //downcasting
         if(airport.name.equals(name)) //equals()-->String values
             return true;

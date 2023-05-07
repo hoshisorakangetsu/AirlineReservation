@@ -12,15 +12,13 @@ import java.util.regex.*;
 public class Domestic extends PlaneTicket{
     //variable
     private String passengerIC;
-    private String passengerPassport;
     
     //method
     public Domestic(){};
     
     public Domestic(PlaneSchedule sched, String seatType, String passengerName, int passengerAge, double price, String passengerIC, String passengerPassport){
-        super(sched, seatType, passengerName, passengerAge, price);
+        super(sched, seatType, passengerName, passengerAge, price, passengerPassport);
         this.passengerIC = passengerIC;
-        this.passengerPassport = passengerPassport;
     }
     
     //setter
@@ -28,21 +26,13 @@ public class Domestic extends PlaneTicket{
         this.passengerIC = passengerIC;
     }
     
-    public void setPassengerPassport(String passengerPassport){
-        this.passengerPassport = passengerPassport;
-    }
-    
     //getter
     public String getPassengerIC(){
         return passengerIC;
     }
     
-    public String getPassengerPassport(){
-        return passengerPassport;
-    }
-    
     public String toString(){
-        return String.format(super.toString()+"Passenger IC: %s\nPassenger Passport: %s\n", passengerIC, passengerPassport);
+        return String.format(super.toString()+"Passenger IC: %s\n", passengerIC);
     }
     
     public boolean equals(Object o){
@@ -55,7 +45,7 @@ public class Domestic extends PlaneTicket{
     
     //method to verify is the document complete
     public boolean verifyDocuments(){
-        if(passengerIC != null || passengerPassport != null){ //if IC or Passport is available then true
+        if(passengerIC != null || super.getPassengerPassport() != null){ //if IC or Passport is available then true
             if(passengerIC != null){ //if IC is available then check
                 if(passengerIC.length() == 12){ //is the length 12 then check
                     for(int i = 0; i < passengerIC.length(); i++){ //check is all int
@@ -68,9 +58,12 @@ public class Domestic extends PlaneTicket{
                     return true;
                 }else{ //length is not 12
                     System.out.println("IC is invalid");
-                    return false; //return false as fail
                 }
             }else{ //check passport
+                if (super.getPassengerPassport() == null || super.getPassengerPassport().isBlank()){
+                    System.out.println("Passport is required");
+                    return false;
+                }
                 //create pattern from regex
                 Pattern singaporeRegex = Pattern.compile("[A-Za-z][0-9]{7}[A-Za-z]");
                 Pattern chinaRegex = Pattern.compile("[A-Z][0-9]{8,9}");
@@ -78,6 +71,7 @@ public class Domestic extends PlaneTicket{
                 Pattern malaysiaRegex = Pattern.compile("[A-Z][0-9]{8}");
                 
                 //match regex with passport
+                String passengerPassport = super.getPassengerPassport();
                 Matcher singapore = singaporeRegex.matcher(passengerPassport);
                 Matcher china = chinaRegex.matcher(passengerPassport);
                 Matcher uK = uKRegex.matcher(passengerPassport);
@@ -100,7 +94,7 @@ public class Domestic extends PlaneTicket{
         }
         
         //if all the above checks failed
-        System.out.println("IC or passport is invalid");
+        System.out.println("IC and passport is invalid");
         return false; //return false as fail
     }
 }

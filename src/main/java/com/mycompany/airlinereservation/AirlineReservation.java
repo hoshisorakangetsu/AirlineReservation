@@ -18,7 +18,6 @@ public class AirlineReservation {
 
     // the way drivers are handled is abit not consistent, our brain was on steroids when coding @_@
     public static void main(String[] args) {
-
         while (true) {
             // flow
             // check if user is logged in, if not logged in, 
@@ -28,7 +27,7 @@ public class AirlineReservation {
                     Account.getBeforeLoginOptions(), 
                     "Please enter your choice: "
                 );
-                ConsoleInput.clearBuffer();
+                ConsoleInput.reInit();
 
 
                 // if is not exit, directly continue from the while loop
@@ -50,7 +49,7 @@ public class AirlineReservation {
                     AccountDriver.getMenu(),
                     "Please enter your action: "
                 );
-                ConsoleInput.clearBuffer();
+                ConsoleInput.reInit();
             } catch (ShouldNotReachException snre) {
                 System.out.println(snre.getMessage());
                 continue; // if ShouldNotReachExceptionis thrown, 
@@ -130,6 +129,22 @@ public class AirlineReservation {
                             System.out.println(nae.getMessage());
                         }
                         break;
+                    case 2:
+                        try {
+                            ReservationDriver.viewReservationCust();
+                        } catch (NoAccessException nae) {
+                            // this is **EXTREMELY** unlikely to happen
+                            System.out.println(nae.getMessage());
+                        }
+                        break;
+                    case 3:
+                        try {
+                            ReservationDriver.editReservation();
+                        } catch (NoAccessException nae) {
+                            // this is **EXTREMELY** unlikely to happen
+                            System.out.println(nae.getMessage());
+                        }
+                        break;
                     // 4 - 7 handled by AccountDriver
                     case 4:
                         AccountDriver.viewAccountDetails();
@@ -152,67 +167,9 @@ public class AirlineReservation {
                 continue;
             }
             
-            break; // break for now to prevent infinite loop as bottom implementation havent done
+            // this code most likely won't be reached, but place here as a safeguard in case infinite loop occurs
+            break;
         }
-        
-        // while (true) {
-        //     // if there isn't any logged in account
-        //     if (loggedInAccount == null) {
-        //         int beforeLoginChoice = ConsoleInput.getChoice(Account.getBeforeLoginOptions(), "Please enter your choice: ");
-        //         if (beforeLoginChoice == 3) return;  // yes exit the whole system ;)
-        //     }
-
-        //     // show different menu and carry out different actions depending on the logged in user
-        //     if (loggedInAccount instanceof Customer) {
-        //         int customerChoice = ConsoleInput.getChoice(Customer.getOperations(), "Please enter your choice: ");
-        //     } else if (loggedInAccount instanceof Admin) {
-        //         int adminChoice = ConsoleInput.getChoice(Admin.getOperations(), "Please enter your choice: ");
-        //     }
-        // }
-        // if customer
-        //      create reservation
-        //          select plane sched
-        //              fill in number of passengers
-        //              fill in passenger details
-        //              select seat
-        //              create ticket
-        //          repeat until all passenger fill in complete
-        //          select payment option
-        //              make payment
-        //      check reservation
-        //          print all reservations
-        //          ask wan check which reservation
-        //              print all the tickets
-        //              ask wan check which ticket
-        //                  ask if want to edit
-        //                      edit name
-        //                      edit ID number
-        //                      if econ, ask if wan Upgrade()
-        // elsif admin
-        //      view plane schedules
-        //          ask which schedule
-        //          display schedule
-        //          ask if wan edit schedules
-        //              edit price
-        //              show available planes
-        //              edit plane
-        //              delay flight?
-        //          add plane schedule
-        //      view planes
-        //          add planes
-        //      view users
-        //          add customers
-        //          add users
-        // else 
-        //      show error
-        //      ask if wan register
-        //          get username
-        //          get password
-        
-        // System.out.println("Hello World!");
-        // String s = ConsoleInput.getString("Test, string please?: ");
-        // PrettyPrint.printHorizontalLine(20);
-        // System.out.println(s);
     }
 
 }

@@ -12,7 +12,7 @@ public class ConsoleInput {
     private static Scanner scanner = new Scanner(System.in);
 
     // I know it will be needed ;)
-    public static void clearBuffer() {
+    public static void reInit() {
         // be more explicit, reinit the scanner object
         scanner = new Scanner(System.in);
     }

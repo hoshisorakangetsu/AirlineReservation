@@ -50,13 +50,13 @@ public class PlaneScheduleDriver {
 
     public static void addSchedule() {
         double baggageAllowance = ConsoleInput.getDouble("Enter baggage allowance: ");
-        ConsoleInput.clearBuffer();
+        ConsoleInput.reInit();
         Date flightDateTime = ConsoleInput.getDateTime("Enter the flight date time (dd/mm/yyyy HH:mm): ");
         int srcAirportIdx = ConsoleInput.getChoice(AirportDriver.getAirports(), "Enter number of the source airport: ");
         int destAirportIdx = ConsoleInput.getChoice(AirportDriver.getAirports(), "Enter number of the destination airport: ");
         int planeIdx = ConsoleInput.getChoice(PlaneDriver.getPlanes(), "Enter number of the plane: ");
         double basePrice = ConsoleInput.getDouble("Enter the base price for the tickets: RM");
-        ConsoleInput.clearBuffer();
+        ConsoleInput.reInit();
         boolean visaRequired = Character.toLowerCase(
             ConsoleInput.getChar("Is visa required? [Y/n]: ")
         ) == 'y';
@@ -76,7 +76,7 @@ public class PlaneScheduleDriver {
 
     public static void viewSchedule() {
         int choice = ConsoleInput.getChoice(schedules, "Which schedule to look at: ");
-        ConsoleInput.clearBuffer();
+        ConsoleInput.reInit();
         PrettyPrint.printDetailsCard(schedules[choice - 1]);
         // block until user decides everything is ok
         ConsoleInput.getString("Press [enter] to continue");
@@ -84,7 +84,7 @@ public class PlaneScheduleDriver {
 
     public static void editSchedule() {
         int choice = ConsoleInput.getChoice(schedules, "Which schedule to look at: ");
-        ConsoleInput.clearBuffer();
+        ConsoleInput.reInit();
         PlaneSchedule schedToEdit = schedules[choice - 1];
 
         // cannot edit src and dest airport
@@ -94,7 +94,7 @@ public class PlaneScheduleDriver {
                 schedToEdit.getBaggageAllowance()
             )
         );
-        ConsoleInput.clearBuffer();
+        ConsoleInput.reInit();
         Date flightDateTime = ConsoleInput.getDateTime(
             String.format(
                 "Enter the flight date time (dd/mm/yyyy HH:mm, Current: %s): ",
@@ -111,7 +111,7 @@ public class PlaneScheduleDriver {
         double basePrice = ConsoleInput.getDouble(
             String.format("Enter base price (Current: RM%.2f): RM", schedToEdit.getBasePrice())
         );
-        ConsoleInput.clearBuffer();
+        ConsoleInput.reInit();
 
         schedToEdit.setBaggageAllowance(baggageAllowance);
         schedToEdit.setPlane(PlaneDriver.getPlane(planeIdx - 1));
