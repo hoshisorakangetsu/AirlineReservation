@@ -1,5 +1,8 @@
 package com.mycompany.airlinereservation.util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -41,6 +44,41 @@ public class ConsoleInput {
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input: Please enter a valid decimal");
                 scanner.nextLine(); // consume invalid token
+            }
+        }
+    }
+
+    public static Date getDate(String prompt) {
+        while (true) {
+            try {
+                // if user didnt provide prompt use the default prompt
+                System.out.println(prompt == null ? "Please enter a date (dd/mm/yyyy): " : prompt);
+                String inDate = scanner.nextLine();
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                return sdf.parse(inDate);
+            } catch (ParseException pe) {
+                System.out.println(pe.getMessage());
+                System.out.println("Please enter a valid date using the correct format");
+            }
+        }
+    }
+
+    public static Date getDateTime(String prompt) {
+        while (true) {
+            try {
+                System.out.println(
+                    prompt == null 
+                        ? "Please enter a date time (dd/MM/yyyy HH:mm): " 
+                        : prompt
+                );
+                String inDate = scanner.nextLine();
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                return sdf.parse(inDate);
+            } catch (ParseException pe) {
+                System.out.println(pe.getMessage());
+                System.out.println("Please enter a valid date using the correct format");
             }
         }
     }
