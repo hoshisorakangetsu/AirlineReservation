@@ -4,11 +4,13 @@
  */
 package com.mycompany.airlinereservation.entity_classes;
 
+import com.mycompany.airlinereservation.util.Choicer;
+
 /**
  *
  * @author yong
  */
-public class Reservation {
+public class Reservation implements Choicer {
     private PlaneTicket[] tickets;
     private Payment pay;
     private Customer cust;
@@ -40,12 +42,12 @@ public class Reservation {
     public void setCust(Customer cust){
         this.cust=cust;
     }
-   public String toString() {
-    String result = "";
-    for (PlaneTicket ticket : tickets) {
-        result += String.format("Ticket: %s \n Payment : %.2f \n Customer: %s\n", ticket, pay, cust);
-    }
-    return result;
+    public String toString() {
+        String res=String.format("Customer: \n%s\nPayment: \n%s", cust.toString(), pay.toString());
+        for(int i=0;i<tickets.length;i++){
+            res += String.format("\nTicket #%d:\n%s",i+1,tickets[i].toString());
+        }
+        return res;
     }
    public boolean equals(Object o){
        if (o instanceof Reservation ){
@@ -54,4 +56,8 @@ public class Reservation {
            return false;
        }
    }
+    // can based on the schedule, which is on the tickets to make a selection
+    public String toChoiceString(){
+        return tickets[0].getSched().toChoiceString();
+    }
 }
