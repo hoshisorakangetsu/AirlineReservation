@@ -4,6 +4,7 @@
  */
 package com.mycompany.airlinereservation.entity_classes;
 
+import java.text.SimpleDateFormat;
 /**
  *
  * @author user
@@ -45,7 +46,15 @@ public abstract class Payment {
     }
     
     public String toString(){
-        return String.format("Payment Date : %s\nAmount : RM%.2f", paymentDate, amount);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
+        return String.format(
+            "%sAmount : RM%.2f\nPaid : %s\n", 
+            paymentDate != null 
+                ? String.format("Payment Date : %s\n", sdf.format(paymentDate)) 
+                : "", 
+            amount, 
+            paidStatus ? "yes" : "no"
+        );
     }
     
     public boolean equals(Object o){
