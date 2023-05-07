@@ -3,6 +3,7 @@ package com.mycompany.airlinereservation;
 import java.util.Date;
 
 import com.mycompany.airlinereservation.driver.*;
+import com.mycompany.airlinereservation.driver.ReservationDriver.NoAccessException;
 // every class in entity_classes would be used
 import com.mycompany.airlinereservation.entity_classes.Account;
 import com.mycompany.airlinereservation.entity_classes.Admin;
@@ -119,31 +120,38 @@ public class AirlineReservation {
                 // done operation, skip to the next iteration of the big while loop to trigger the menu again, let it be login menu (if user logs out) or the normal menu
                 continue;
             } else if (AccountDriver.getLoggedInAccount() instanceof Customer) {
-                // 1 - 3 handled by ReservationDriver (call methods in main)
-                // 4 - 7 handled by AccountDriver
-                if (menuChoice >= 4 && menuChoice <= 7) {
-                    switch (menuChoice) {
-                        case 4:
-                            AccountDriver.viewAccountDetails();
-                            break;
-                        case 5:
-                            AccountDriver.changeUsername();
-                            break;
-                        case 6:
-                            AccountDriver.changePassword();
-                            break;
-                        case 7:
-                            AccountDriver.logout();
-                            break;
-                    
-                        // should not trigger
-                        default:
-                            break;
-                    }
-                    // done operation, skip to the next iteration of the big while loop to trigger the menu again, let it be login menu (if user logs out) or the normal menu
-                    continue;
+                switch (menuChoice) {
+                    // 1 - 3 handled by ReservationDriver (call methods in main)
+                    case 1:
+                        try {
+                            ReservationDriver.makeReservation();
+                        } catch (NoAccessException nae) {
+                            // this is **EXTREMELY** unlikely to happen
+                            System.out.println(nae.getMessage());
+                        }
+                        break;
+                    // 4 - 7 handled by AccountDriver
+                    case 4:
+                        AccountDriver.viewAccountDetails();
+                        break;
+                    case 5:
+                        AccountDriver.changeUsername();
+                        break;
+                    case 6:
+                        AccountDriver.changePassword();
+                        break;
+                    case 7:
+                        AccountDriver.logout();
+                        break;
+                
+                    // should not trigger
+                    default:
+                        break;
                 }
+                // done operation, skip to the next iteration of the big while loop to trigger the menu again, let it be login menu (if user logs out) or the normal menu
+                continue;
             }
+            
             break; // break for now to prevent infinite loop as bottom implementation havent done
         }
         
