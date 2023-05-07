@@ -74,7 +74,7 @@ public class ConsoleInput {
                 );
                 String inDate = scanner.nextLine();
 
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                 return sdf.parse(inDate);
             } catch (ParseException pe) {
                 System.out.println(pe.getMessage());

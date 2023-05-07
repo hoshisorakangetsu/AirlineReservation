@@ -24,4 +24,10 @@ public class AirportDriver {
     public static Airport[] getAirports() {
         return airports;
     }
+
+    public static Airport getAirport(int index) throws IndexOutOfBoundsException {
+        if (index >= airports.length || index < 0)
+            throw new IndexOutOfBoundsException(index);
+        return airports[index];
+    }
 }

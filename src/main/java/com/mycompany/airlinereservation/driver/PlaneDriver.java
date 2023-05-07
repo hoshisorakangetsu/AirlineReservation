@@ -22,4 +22,10 @@ public class PlaneDriver {
     public static Plane[] getPlanes() {
         return planes;
     }
+
+    public static Plane getPlane(int index) throws IndexOutOfBoundsException {
+        if (index >= planes.length || index < 0)
+            throw new IndexOutOfBoundsException(index);
+        return planes[index];
+    }
 }
