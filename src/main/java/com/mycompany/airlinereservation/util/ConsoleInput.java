@@ -46,6 +46,17 @@ public class ConsoleInput {
         }
     }
 
+    // asks for an int between min and max, inclusive
+    public static int getInt(String prompt, int min, int max) {
+        while (true) {
+            int res = getInt(prompt);
+            if (res >= min || res <= max) {
+                return res;
+            }
+            System.out.printf("Invalid input: Please enter an integer in between (%d, %d) inclusive\n", min, max);
+        }
+    }
+
     public static double getDouble(String prompt) {
         while (true) {
             try {

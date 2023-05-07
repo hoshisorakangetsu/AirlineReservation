@@ -170,7 +170,7 @@ public class ReservationDriver {
             // repeatedly get information of the passenger until verify successes
             PlaneTicket pt;
             String passengerName = ConsoleInput.getString("Enter passenger name: ", false);
-            int passengerAge = ConsoleInput.getInt("Enter passenger age: ");
+            int passengerAge = ConsoleInput.getInt("Enter passenger age: ", 1, 130);
             ConsoleInput.reInit();
             double price = selectedSchedule.getBasePrice();
             boolean isBusinessClass = Character.toLowerCase(
@@ -274,7 +274,8 @@ public class ReservationDriver {
         // ask everything haha
         String passengerName = ConsoleInput.getString("Enter passenger name (leave empty to not change): ");
         int passengerAge = ConsoleInput.getInt(
-            String.format("Enter passenger age (Current: %d): ", pt.getPassengerAge())
+            String.format("Enter passenger age (Current: %d): ", pt.getPassengerAge()),
+            1, 130
         );
         ConsoleInput.reInit();
 
