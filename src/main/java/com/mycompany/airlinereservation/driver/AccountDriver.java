@@ -214,7 +214,7 @@ public class AccountDriver {
                     usernameRepeat:
                     while (true) {
                         newUsername = ConsoleInput.getString("Enter new username (leave blank to not change): ");
-                        if (newUsername.isEmpty()) {
+                        if (newUsername.isBlank()) {
                             break;
                         }
                         for (Account a : userAccounts) {
@@ -225,11 +225,11 @@ public class AccountDriver {
                         }
                         break;
                     }
-                    if (!newUsername.isEmpty()) {
+                    if (!newUsername.isBlank()) {
                         account.setUsername(newUsername);
                     }
                     String newPassword = ConsoleInput.getString("Enter new password (leave blank to not change)");
-                    if (!newUsername.isEmpty()) {
+                    if (!newUsername.isBlank()) {
                         account.setPassword(newPassword);
                     }
                     System.out.printf("%s edited successfully!", ops == 12 ? "CUSTOMER" : "ADMIN");

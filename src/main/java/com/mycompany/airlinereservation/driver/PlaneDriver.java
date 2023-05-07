@@ -1,6 +1,9 @@
 package com.mycompany.airlinereservation.driver;
 
 import com.mycompany.airlinereservation.entity_classes.Plane;
+import com.mycompany.airlinereservation.util.ArrayUtils;
+import com.mycompany.airlinereservation.util.ConsoleInput;
+import com.mycompany.airlinereservation.util.PrettyPrint;
 
 // stores all available planes and implements plane related entrypoints
 public class PlaneDriver {
@@ -28,4 +31,78 @@ public class PlaneDriver {
             throw new IndexOutOfBoundsException(index);
         return planes[index];
     }
+
+    public static void addPlane() {
+        int passengerCapacity = ConsoleInput.getInt("Enter passenger capacity: ");
+        ConsoleInput.clearBuffer();
+        String model = ConsoleInput.getString("Enter plane model", false);
+        String manufacturer = ConsoleInput.getString("Enter manufacturer: ", false);
+        String company = ConsoleInput.getString("Enter airline company: ", false);
+        String id;
+        // loop until id entered do not repeat
+        idRepeat:
+        while (true) {
+            id = ConsoleInput.getString("Enter airplane ID: ", false);
+            
+            for (Plane p : planes) {
+                if (p.getId().equals(id)) {
+                    System.out.println("Plane ID has repeated, please enter another one");
+                    continue idRepeat;
+                }
+            }
+            break;
+        }
+        Plane newPlane = new Plane(passengerCapacity, model, manufacturer, company, id);
+        planes = ArrayUtils.appendIntoArray(planes, newPlane);
+    }
+
+    public static void viewPlane() {
+        int choice = ConsoleInput.getChoice(planes, "Enter number of the plane to view in detail: ");
+        PrettyPrint.printDetailsCard(planes[choice - 1]);
+    }
+
+    public static void editPlane() {
+        // prompt all planes and get selection
+        int choice = ConsoleInput.getChoice(planes, "Enter number of the plane to edit: ");
+        Plane planeToEdit = planes[choice - 1];  // thank java for the reference magik
+        int passengerCapacity = ConsoleInput.getInt(
+            String.format(
+                "Enter passenger capacity (Current: %d): ",
+                planeToEdit.getPassengerCapacity()
+            )
+        );
+        String model = ConsoleInput.getString("Enter a model (leave blank to not change): ");
+        String manufacturer = ConsoleInput.getString("Enter a manufacturer (leave blank to not change): ");
+        String company = ConsoleInput.getString("Enter a company (leave blank to not change): ");
+        String id;
+        // loop until id entered do not repeat
+        idRepeat:
+        while (true) {
+            id = ConsoleInput.getString("Enter airplane ID (leave blank to not change): ");
+
+            if (id.isBlank())
+                break;
+            
+            for (Plane p : planes) {
+                if (p.getId().equals(id)) {
+                    System.out.println("Plane ID has repeated, please enter another one");
+                    continue idRepeat;
+                }
+            }
+            break;
+        }
+
+        // do the set operations
+        planeToEdit.setPassengerCapacity(passengerCapacity);
+        if (!model.isBlank())
+            planeToEdit.setModel(model);
+        if (!manufacturer.isBlank())
+            planeToEdit.setManufacturer(manufacturer);
+        if (!company.isBlank())
+            planeToEdit.setCompany(company);
+        if (!id.isBlank())
+            planeToEdit.setId(id);
+        System.out.println("Plane edited successfully!");
+    }
+
 }

@@ -24,6 +24,16 @@ public class ConsoleInput {
         return scanner.nextLine();
     }
 
+    public static String getString(String prompt, boolean allowEmpty) {
+        String res;
+        do {
+            res = getString(prompt);
+            if (res.isBlank())
+                System.out.println("No empty inputs are allowed");
+        } while(!allowEmpty && res.isBlank());
+        return res;
+    }
+
     public static int getInt(String prompt) {
         while (true) {
             try {

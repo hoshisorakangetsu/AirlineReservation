@@ -16,12 +16,6 @@ import com.mycompany.airlinereservation.util.ShouldNotReachException;
 public class AirlineReservation {
 
     public static void main(String[] args) {
-        // Plane[] planes = new Plane[];
-        // PlaneSchedule[] sched = new PlaneSchedule[];
-        // Reservation[] reserves = new Reservation[];
-        // Payment[] payments = new Payments[];
-        // Reservation[] reservations = new Reservation[];
-        // Payment[] payments = new Payment[];
 
         while (true) {
             // flow
@@ -37,7 +31,7 @@ public class AirlineReservation {
 
                 // if is not exit, directly continue from the while loop
                 // the state kept on AccountDriver will let this block not execute next time
-                // if did not continue, still need check is logged in ltr, redundant operation
+                // if did not used continue, still need check is logged in ltr, redundant operation
                 if (beforeLoginSelection != 3) {
                     AccountDriver.executeOperation(beforeLoginSelection);
                     continue;
