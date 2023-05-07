@@ -2,7 +2,6 @@ package com.mycompany.airlinereservation.driver;
 
 import java.util.Date;
 
-import com.mycompany.airlinereservation.entity_classes.PlaneSchedule;
 import com.mycompany.airlinereservation.entity_classes.Reservation;
 
 public class ReservationDriver {

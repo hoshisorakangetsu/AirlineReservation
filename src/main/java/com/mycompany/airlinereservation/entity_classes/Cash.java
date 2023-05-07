@@ -17,17 +17,24 @@ public class Cash extends Payment{
     public Cash (){
         super();
     }
-    public Cash (Date paymentDate,int amount){
-        super (paymentDate, amount);
+    public Cash (Date paymentDate,double amount,boolean paidStatus){
+        super (paymentDate, amount, paidStatus);
+    }
+    public Cash (double amount){
+        super (amount);
     }
     public String toString (){
         return super.toString();
     }
-     public boolean equals(Object o){
+    public boolean equals(Object o){
        if (o instanceof Cash){
            return (super.equals(o));
        }else {
            return false;
        }
-   }
+    }
+    // cash payment always successes
+    public boolean makePayment(){
+        return true;
+    }
 }

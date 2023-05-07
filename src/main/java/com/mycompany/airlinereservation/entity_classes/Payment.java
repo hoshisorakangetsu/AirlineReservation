@@ -9,15 +9,23 @@ package com.mycompany.airlinereservation.entity_classes;
  * @author user
  */
 import java.util.Date;
-public class Payment {
+public abstract class Payment {
     private Date paymentDate;
     private double amount;
+    private boolean paidStatus;
     
     public Payment(){}
     
-    public Payment(Date paymentDate, double amount){
+    public Payment(Date paymentDate, double amount, boolean paidStatus){
         this.paymentDate = paymentDate;
         this.amount = amount;
+        this.paidStatus = paidStatus;
+    }
+
+    public Payment(double amount){
+        this.paymentDate = null;
+        this.amount = amount;
+        this.paidStatus = false;
     }
     
     public Date getPaymentDate(){
@@ -47,4 +55,6 @@ public class Payment {
         else
             return false;
     }
+
+    public abstract boolean makePayment();
 }

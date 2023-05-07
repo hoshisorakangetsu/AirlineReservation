@@ -15,15 +15,21 @@ public class EWallet extends Payment{
     
     public EWallet(){}
     
-    public EWallet(Date paymentDate,double amount, String mobileNo){
-        super(paymentDate,amount);
+    public EWallet(Date paymentDate,double amount,boolean paidStatus, String mobileNo,String walletType){
+        super(paymentDate,amount,paidStatus);
         this.mobileNo = mobileNo;
+        this.walletType = walletType;
+    }
+
+    public EWallet(double amount,String mobileNo,String walletType){
+        super(amount);
+        this.mobileNo = mobileNo;
+        this.walletType = walletType;
     }
     
-    public static boolean verifyMobile(String mobileNo){
-        int phoneNum = 0;
+    public boolean verifyMobile(){
         try{
-            phoneNum = Integer.parseInt(mobileNo);
+            Integer.parseInt(this.mobileNo);
         }
         catch(NumberFormatException error){
             return false;
@@ -54,6 +60,13 @@ public class EWallet extends Payment{
     public boolean equals(Object o){
         EWallet wallet = (EWallet)o; //downcasting
         if(wallet.mobileNo.equals(mobileNo)) //equals()-->String values
+            return true;
+        else
+            return false;
+    }
+    // if mobileNo is valid then pay success
+    public boolean makePayment(){
+        if(verifyMobile())
             return true;
         else
             return false;
