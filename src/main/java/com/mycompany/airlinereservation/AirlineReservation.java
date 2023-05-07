@@ -1,17 +1,11 @@
 package com.mycompany.airlinereservation;
 
-import java.util.Date;
-
 import com.mycompany.airlinereservation.driver.*;
 import com.mycompany.airlinereservation.driver.ReservationDriver.NoAccessException;
-// every class in entity_classes would be used
 import com.mycompany.airlinereservation.entity_classes.Account;
 import com.mycompany.airlinereservation.entity_classes.Admin;
 import com.mycompany.airlinereservation.entity_classes.Customer;
-import com.mycompany.airlinereservation.util.ArrayUtils;
-import com.mycompany.airlinereservation.util.ChoiceString;
 import com.mycompany.airlinereservation.util.ConsoleInput;
-import com.mycompany.airlinereservation.util.PrettyPrint;
 import com.mycompany.airlinereservation.util.ShouldNotReachException;
 
 public class AirlineReservation {
