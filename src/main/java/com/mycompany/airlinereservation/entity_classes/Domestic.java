@@ -60,12 +60,14 @@ public class Domestic extends PlaneTicket{
                 if(passengerIC.length() == 12){ //is the length 12 then check
                     for(int i = 0; i < passengerIC.length(); i++){ //check is all int
                         if(passengerIC.charAt(i)<'0' || passengerIC.charAt(i)>'9'){ //if is < 0 or > 9, not int, charAt returns char, can just compare between chars for easy handling
+                            System.out.println("IC is invalid");
                             return false; //return false as fail
                         }
                     }
                     // all is between 0 - 9
                     return true;
                 }else{ //length is not 12
+                    System.out.println("IC is invalid");
                     return false; //return false as fail
                 }
             }else{ //check passport
@@ -90,12 +92,15 @@ public class Domestic extends PlaneTicket{
                     return true;
                 else if (malaysia.find())
                     return true;
-                else
+                else{
+                    System.out.println("Passport is invalid");
                     return false;
+                }
             }
         }
         
         //if all the above checks failed
+        System.out.println("IC or passport is invalid");
         return false; //return false as fail
     }
 }

@@ -10,7 +10,7 @@ import com.mycompany.airlinereservation.util.Choicer;
  *
  * @author Neoh Soon Chee
  */
-public class PlaneTicket implements Choicer {
+public abstract class PlaneTicket implements Choicer {
     //variable
     private String id;
     private PlaneSchedule sched;
@@ -104,4 +104,6 @@ public class PlaneTicket implements Choicer {
             return false; //return as upgrade fail
         }
     }
+
+    public abstract boolean verifyDocuments();
 }

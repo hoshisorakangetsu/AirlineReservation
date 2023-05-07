@@ -94,12 +94,18 @@ public class ConsoleInput {
     }
 
     public static char getChar(String prompt) {
-        System.out.print(prompt);
-        String res = scanner.nextLine();
-        if (res.length() > 1) {
-            System.out.println("Input has more than one character, ignoring the rest...");
+        while (true) {
+            System.out.print(prompt);
+            String res = scanner.nextLine();
+            if (res.isBlank()) {
+                System.out.println("Input is empty, please reenter");
+                continue;
+            }
+            if (res.length() > 1) {
+                System.out.println("Input has more than one character, ignoring the rest...");
+            }
+            return res.charAt(0);
         }
-        return res.charAt(0);
     }
 
     // returns the number of that choice

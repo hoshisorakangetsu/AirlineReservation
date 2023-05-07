@@ -55,14 +55,14 @@ public class International extends PlaneTicket{
     //method to verify documents is complete
     public boolean verifyDocuments(){
         if(super.getSched().getVisaRequired()){ //if visa is required
-            if(passengerPassport == null && passengerVisa == null){ //if passport and visa is null
+            if((passengerPassport == null || passengerPassport.isBlank()) && (passengerVisa == null || passengerVisa.isBlank())){ //if passport and visa is null
                 System.out.println("The visa and passport is required."); //document not complete, return false as fail
                 return false;
             }else{ //passport and visa is complete
                 return true; //return true as success
             }
         }else{ //if visa is not required
-            if(passengerPassport == null){ //if passport is null
+            if(passengerPassport == null || passengerPassport.isBlank()){ //if passport is null
                 System.out.println("The passport is required."); //document not complete, return false as fail
                 return false;
             }else{ //passport is complete

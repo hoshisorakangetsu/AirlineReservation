@@ -21,10 +21,13 @@ public class Card extends Payment {
     }
     public Card(double amount,String cardNo){
         super(amount);
-        this.cardNo = cardNo;
+        this.cardNo=cardNo;
     }
     public String getCardNo(){
         return cardNo;
+    }
+    public void setCardNo(String cardNo){
+        this.cardNo=cardNo;
     }
     
     public boolean verifyCard(){

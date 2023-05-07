@@ -89,6 +89,6 @@ public class Airport implements Choicer {
     }
 
     public String toChoiceString() {
-        return name + " - " + country;
+        return name + "(" + country + ")";
     }
 }

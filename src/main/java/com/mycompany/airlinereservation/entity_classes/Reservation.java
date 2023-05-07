@@ -4,6 +4,9 @@
  */
 package com.mycompany.airlinereservation.entity_classes;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import com.mycompany.airlinereservation.util.Choicer;
 
 /**
@@ -14,6 +17,7 @@ public class Reservation implements Choicer {
     private PlaneTicket[] tickets;
     private Payment pay;
     private Customer cust;
+    private Date dateCreated;
     public Reservation (){
         
     }
@@ -21,6 +25,7 @@ public class Reservation implements Choicer {
         this.tickets=tickets;
         this.pay=pay;
         this.cust=cust;
+        this.dateCreated=new Date();
     }
     public PlaneTicket[] getPlaneTicket(){
         return tickets;
@@ -33,6 +38,9 @@ public class Reservation implements Choicer {
         return cust;
         
     }
+    public Date getDateCreated(){
+        return dateCreated;
+    }
     public void setTicket(PlaneTicket[] tickets){
         this.tickets=tickets;
     }
@@ -42,8 +50,12 @@ public class Reservation implements Choicer {
     public void setCust(Customer cust){
         this.cust=cust;
     }
+    public void setDateCreated(Date d){
+        this.dateCreated=d;
+    }
     public String toString() {
-        String res=String.format("Customer: \n%s\nPayment: \n%s", cust.toString(), pay.toString());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
+        String res=String.format("Date Reserved:%s\nCustomer: \n%s\nPayment: \n%s",sdf.format(dateCreated),cust.toString(),pay.toString());
         for(int i=0;i<tickets.length;i++){
             res += String.format("\nTicket #%d:\n%s",i+1,tickets[i].toString());
         }
@@ -58,6 +70,7 @@ public class Reservation implements Choicer {
    }
     // can based on the schedule, which is on the tickets to make a selection
     public String toChoiceString(){
-        return tickets[0].getSched().toChoiceString();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
+        return sdf.format(dateCreated) + " " + tickets[0].getSched().toChoiceString();
     }
 }

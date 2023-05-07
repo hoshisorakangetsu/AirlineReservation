@@ -14,27 +14,27 @@ public class PlaneScheduleDriver {
         new PlaneSchedule(
             30.0, new Date(2023, 5, 15, 10, 0), 
             AirportDriver.getAirport(0), AirportDriver.getAirport(4), 
-            PlaneDriver.getPlane(0), false
+            PlaneDriver.getPlane(0), false, 200.00
         ),
         new PlaneSchedule(
             25.0, new Date(2023, 5, 16, 8, 30), 
             AirportDriver.getAirport(4), AirportDriver.getAirport(0), 
-            PlaneDriver.getPlane(1), false
+            PlaneDriver.getPlane(1), false, 200.00
         ),
         new PlaneSchedule(
             20.0, new Date(2023, 5, 17, 2, 45), 
             AirportDriver.getAirport(2), AirportDriver.getAirport(6), 
-            PlaneDriver.getPlane(5), true
+            PlaneDriver.getPlane(5), true, 200.00
         ),
         new PlaneSchedule(
             15.0, new Date(2023, 5, 21, 19, 30), 
             AirportDriver.getAirport(3), AirportDriver.getAirport(1), 
-            PlaneDriver.getPlane(3), false
+            PlaneDriver.getPlane(3), false, 200.00
         ),
         new PlaneSchedule(
             10.0, new Date(2023, 6, 10, 23, 35), 
             AirportDriver.getAirport(5), AirportDriver.getAirport(12), 
-            PlaneDriver.getPlane(8), true
+            PlaneDriver.getPlane(8), true, 200.00
         ),
     };
 
@@ -55,6 +55,7 @@ public class PlaneScheduleDriver {
         int srcAirportIdx = ConsoleInput.getChoice(AirportDriver.getAirports(), "Enter number of the source airport: ");
         int destAirportIdx = ConsoleInput.getChoice(AirportDriver.getAirports(), "Enter number of the destination airport: ");
         int planeIdx = ConsoleInput.getChoice(PlaneDriver.getPlanes(), "Enter number of the plane: ");
+        double basePrice = ConsoleInput.getDouble("Enter the base price for the tickets: RM");
         ConsoleInput.clearBuffer();
         boolean visaRequired = Character.toLowerCase(
             ConsoleInput.getChar("Is visa required? [Y/n]: ")
@@ -66,7 +67,8 @@ public class PlaneScheduleDriver {
             AirportDriver.getAirport(srcAirportIdx - 1), // in choice all is index + 1, -1 to get back ori index
             AirportDriver.getAirport(destAirportIdx - 1), 
             PlaneDriver.getPlane(planeIdx - 1), 
-            visaRequired
+            visaRequired,
+            basePrice
         );
 
         schedules = ArrayUtils.appendIntoArray(schedules, newSched);
@@ -106,11 +108,15 @@ public class PlaneScheduleDriver {
                 ArrayUtils.indexOf(PlaneDriver.getPlanes(), schedToEdit.getPlane()) + 1 // in choice all is index + 1
             )
         );
+        double basePrice = ConsoleInput.getDouble(
+            String.format("Enter base price (Current: RM%.2f): RM", schedToEdit.getBasePrice())
+        );
         ConsoleInput.clearBuffer();
 
         schedToEdit.setBaggageAllowance(baggageAllowance);
         schedToEdit.setPlane(PlaneDriver.getPlane(planeIdx - 1));
         schedToEdit.setFlightDateTime(flightDateTime);
+        schedToEdit.setBasePrice(basePrice);
     }
 
 }

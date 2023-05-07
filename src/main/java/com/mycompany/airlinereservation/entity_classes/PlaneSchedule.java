@@ -19,16 +19,18 @@ public class PlaneSchedule implements Choicer {
     private Airport dest;
     private Plane plane;
     private boolean visaRequired;
+    private double basePrice;
     
     public PlaneSchedule(){}
     
-    public PlaneSchedule(double baggageAllowance, Date flightDate, Airport src, Airport dest, Plane plane, boolean visaRequired){
+    public PlaneSchedule(double baggageAllowance, Date flightDate, Airport src, Airport dest, Plane plane, boolean visaRequired, double basePrice){
         this.baggageAllowance = baggageAllowance;
         this.flightDateTime = flightDate;
         this.src = src;
         this.dest = dest;
         this.plane = plane;
         this.visaRequired = visaRequired;
+        this.basePrice = basePrice;
     }
     
     public double getBaggageAllowance(){
@@ -54,6 +56,10 @@ public class PlaneSchedule implements Choicer {
     public boolean getVisaRequired(){
         return visaRequired;
     }
+
+    public double getBasePrice(){
+        return basePrice;
+    }
     
     public void setBaggageAllowance(double baggageAllowance){
         this.baggageAllowance = baggageAllowance;
@@ -78,13 +84,18 @@ public class PlaneSchedule implements Choicer {
     public void setVisaRequired(boolean visaRequired){
         this.visaRequired = visaRequired;
     }
+
+    public void setBasePrice(double basePrice){
+        this.basePrice = basePrice;
+    }
     
     public String toString(){
         return String.format(
-            "Baggage Allowance : %.2fkg\nFlight Date Time : %s\nFrom : \n%s\nTo : \n%s\nPlane : \n%s\nVisa Required : \n%s\n", 
+            "Baggage Allowance : %.2fkg\nFlight Date Time : %s\nFrom : \n%s\nTo : \n%s\nPlane : \n%s\nVisa Required : \n%s\nBase Price : RM%.2f\n", 
             baggageAllowance,
             new SimpleDateFormat("dd/MMM/yyyy HH:mm").format(flightDateTime),
-            src.toString(), dest.toString(), plane.toString(), visaRequired ? "yes" : "no");
+            src.toString(), dest.toString(), plane.toString(), visaRequired ? "yes" : "no", basePrice
+        );
     }
     
     public boolean equals(Object o){
@@ -99,7 +110,8 @@ public class PlaneSchedule implements Choicer {
         // return every single details that are needed to the user for them to make a choice and differentiate between schedules
         return 
             new SimpleDateFormat("dd/MMM/yyyy HH:mm").format(flightDateTime) + " " +
-            this.src + " - " + this.dest + " " +
-            this.plane.getId();
+            this.src.toChoiceString() + " -> " + this.dest.toChoiceString() + " " +
+            this.plane.toChoiceString() + " " +
+            String.format("RM%.2f", this.basePrice);
     }
 }
