@@ -17,7 +17,7 @@ public class AccountDriver {
 
     // encapsulate states related to account handling in this class, main program will not have any states
     @SuppressWarnings("deprecation")
-    private static Account[] userAccounts = new Account[] {
+    private static Account[] userAccounts = {
         new Customer("JohnDoe", "securePassword", new Date(2000, 10, 3)),
         new Admin("admin", "root"),
     };

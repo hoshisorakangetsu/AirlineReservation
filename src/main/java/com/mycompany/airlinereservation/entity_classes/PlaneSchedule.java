@@ -14,7 +14,7 @@ import java.util.Date;
 import com.mycompany.airlinereservation.util.Choicer;
 public class PlaneSchedule implements Choicer {
     private double baggageAllowance;
-    private Date flightDate;
+    private Date flightDateTime;
     private Airport src;
     private Airport dest;
     private Plane plane;
@@ -24,7 +24,7 @@ public class PlaneSchedule implements Choicer {
     
     public PlaneSchedule(double baggageAllowance, Date flightDate, Airport src, Airport dest, Plane plane, boolean visaRequired){
         this.baggageAllowance = baggageAllowance;
-        this.flightDate = flightDate;
+        this.flightDateTime = flightDate;
         this.src = src;
         this.dest = dest;
         this.plane = plane;
@@ -35,8 +35,8 @@ public class PlaneSchedule implements Choicer {
         return baggageAllowance;
     }
     
-    public Date getFlightDate(){
-        return flightDate;
+    public Date getFlightDateTime(){
+        return flightDateTime;
     }
          
     public Airport getSrc(){
@@ -59,8 +59,8 @@ public class PlaneSchedule implements Choicer {
         this.baggageAllowance = baggageAllowance;
     }
     
-    public void setFlightDate(Date flightDate){
-        this.flightDate = flightDate;
+    public void setFlightDateTime(Date flightDateTime){
+        this.flightDateTime = flightDateTime;
     }
     
     public void setSrc(Airport src){
@@ -83,13 +83,13 @@ public class PlaneSchedule implements Choicer {
         return String.format(
             "Baggage Allowance : %.2fkg\nFlight Date Time : %s\nFrom : \n%s\nTo : \n%s\nPlane : \n%s\nVisa Required : \n%s\n", 
             baggageAllowance,
-            new SimpleDateFormat("dd/MMM/yyyy HH:mm").format(flightDate),
+            new SimpleDateFormat("dd/MMM/yyyy HH:mm").format(flightDateTime),
             src.toString(), dest.toString(), plane.toString(), visaRequired ? "yes" : "no");
     }
     
     public boolean equals(Object o){
         PlaneSchedule schedule = (PlaneSchedule)o; //downcasting
-        if(schedule.flightDate.equals(flightDate)) //equals()-->String values
+        if(schedule.flightDateTime.equals(flightDateTime)) //equals()-->String values
             return true;
         else
             return false;
@@ -98,7 +98,7 @@ public class PlaneSchedule implements Choicer {
     public String toChoiceString(){
         // return every single details that are needed to the user for them to make a choice and differentiate between schedules
         return 
-            new SimpleDateFormat("dd/MMM/yyyy HH:mm").format(flightDate) + " " +
+            new SimpleDateFormat("dd/MMM/yyyy HH:mm").format(flightDateTime) + " " +
             this.src + " - " + this.dest + " " +
             this.plane.getId();
     }
