@@ -49,11 +49,15 @@ public class ConsoleInput {
     // asks for an int between min and max, inclusive
     public static int getInt(String prompt, int min, int max) {
         while (true) {
-            int res = getInt(prompt);
-            if (res >= min || res <= max) {
-                return res;
+            try {
+                int res = getInt(prompt);
+                if (res >= min || res <= max) {
+                    return res;
+                }
+                throw new InputOutOfRangeException(min, max);
+            } catch (InputOutOfRangeException ioore) {
+                System.out.println(ioore.getMessage());
             }
-            System.out.printf("Invalid input: Please enter an integer in between (%d, %d) inclusive\n", min, max);
         }
     }
 
@@ -139,6 +143,6 @@ public class ConsoleInput {
 // only used in this file, to be thrown when user enters a number outside of the range
 class InputOutOfRangeException extends Exception {
     InputOutOfRangeException(int min, int max) {
-        super("The given input is out of the range " + min + " " + max);
+        super("The given input is out of the range " + min + "-" + max);
     }
 }

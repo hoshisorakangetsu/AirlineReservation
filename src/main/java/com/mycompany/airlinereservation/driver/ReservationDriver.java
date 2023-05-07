@@ -1,5 +1,7 @@
 package com.mycompany.airlinereservation.driver;
 
+import java.util.Date;
+
 import com.mycompany.airlinereservation.entity_classes.Account;
 import com.mycompany.airlinereservation.entity_classes.Card;
 import com.mycompany.airlinereservation.entity_classes.Cash;
@@ -99,6 +101,8 @@ public class ReservationDriver {
         if (pay.makePayment()) {
             // if successful, set paymentDate to today and status to true
             System.out.println("Payment successful!");
+            pay.setPaymentDate(new Date());
+            pay.setPaidStatus(true);
         }
         else {
             System.out.println("Payment unsuccessful");
@@ -108,7 +112,7 @@ public class ReservationDriver {
                     ConsoleInput.getChar("Card is invalid, do you want to change card and retry? [Y/n]: ")
                 ) == 'y';
                 if (retry) {
-                    String newCardNo = ConsoleInput.getString("Enter a card number", false);
+                    String newCardNo = ConsoleInput.getString("Enter a card number: ", false);
                     ((Card) pay).setCardNo(newCardNo);
                     makePayment(pay); // use the power of recursion, nonid to write loop agn yassssss
                 }
@@ -225,7 +229,7 @@ public class ReservationDriver {
             System.out.println("You haven't made any reservations yet, please make one before proceeding");
             return;
         }
-        int choice = ConsoleInput.getChoice(resMadeByCust, "Which reservation to view?");
+        int choice = ConsoleInput.getChoice(resMadeByCust, "Which reservation to view: ");
 
         PrettyPrint.printDetailsCard(resMadeByCust[choice - 1]);
         ConsoleInput.reInit();

@@ -48,6 +48,10 @@ public abstract class Payment {
     public void setAmount(double amount){
         this.amount = amount;
     }
+
+    public void setPaidStatus(boolean paidStatus){
+        this.paidStatus = paidStatus;
+    }
     
     public String toString(){
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");

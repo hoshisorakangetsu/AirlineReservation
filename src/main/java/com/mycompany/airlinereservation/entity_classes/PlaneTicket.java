@@ -87,7 +87,7 @@ public abstract class PlaneTicket implements Choicer {
     }
     
     public String toString(){
-        return String.format("Plane Schedule: %s\nPassenger Name: %s\nPassenger Age: %d\nSeat Type: %s\nPrice: %.2f",sched, passengerName, passengerAge,seatType, price);
+        return String.format("Plane Schedule: \n%s\nPassenger Name: %s\nPassenger Age: %d\nSeat Type: %s\nPrice: %.2f\n",sched.toString(), passengerName, passengerAge,seatType, price);
     }
     
     public boolean equals(Object o){

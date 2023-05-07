@@ -231,7 +231,7 @@ public class AccountDriver {
                     if (!newUsername.isBlank()) {
                         account.setUsername(newUsername);
                     }
-                    String newPassword = ConsoleInput.getString("Enter new password (leave blank to not change)");
+                    String newPassword = ConsoleInput.getString("Enter new password (leave blank to not change): ");
                     if (!newUsername.isBlank()) {
                         account.setPassword(newPassword);
                     }
