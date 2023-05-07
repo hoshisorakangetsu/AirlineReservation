@@ -1,6 +1,9 @@
 package com.mycompany.airlinereservation.driver;
 
 import com.mycompany.airlinereservation.entity_classes.Airport;
+import com.mycompany.airlinereservation.util.ArrayUtils;
+import com.mycompany.airlinereservation.util.ConsoleInput;
+import com.mycompany.airlinereservation.util.PrettyPrint;
 
 public class AirportDriver {
     private static Airport[] airports = new Airport[] {
@@ -30,4 +33,79 @@ public class AirportDriver {
             throw new IndexOutOfBoundsException(index);
         return airports[index];
     }
+
+    public static void addAirport() {
+        String location = ConsoleInput.getString("Enter the location of the new airport: ", false);
+        String state = ConsoleInput.getString("Enter the state of the new airport: ", false);
+        String country = ConsoleInput.getString("Enter the country of the new airport: ", false);
+        String name;
+        // name is unique
+        nameRepeat:
+        while (true) {
+            name = ConsoleInput.getString("Enter the name of the new airport (IATA abbr)", false);
+            for (Airport a : airports) {
+                if (a.getName().equals(name)) {
+                    System.out.println("The name has repeated, please choose another one");
+                    continue nameRepeat;
+                }
+            }
+            break;
+        }
+        int numberOfGates = ConsoleInput.getInt("Enter number of gates: ");
+        ConsoleInput.clearBuffer();
+
+        // create the new airport
+        Airport newAirport = new Airport(location, state, country, name, numberOfGates);
+        airports = ArrayUtils.appendIntoArray(airports, newAirport);
+    }
+
+    public static void viewAirport() {
+        int choice = ConsoleInput.getChoice(airports, "Enter number of airport to view in detail: ");
+        ConsoleInput.clearBuffer();
+        PrettyPrint.printDetailsCard(airports[choice - 1]);
+    }
+
+    public static void editAirport() {
+        int choice = ConsoleInput.getChoice(airports, null);
+        ConsoleInput.clearBuffer();
+        Airport airportToEdit = airports[choice - 1];
+        String location = ConsoleInput.getString("Enter the location (leave empty to not change): ");
+        String state = ConsoleInput.getString("Enter the state (leave empty to not change): ");
+        String country = ConsoleInput.getString("Enter the country (leave empty to not change): ");
+        String name;
+        // name is unique
+        nameRepeat:
+        while (true) {
+            name = ConsoleInput.getString("Enter the name (IATA abbr, leave empty to not change)");
+            if (name.isBlank())
+                break;
+            for (Airport a : airports) {
+                if (a.getName().equals(name)) {
+                    System.out.println("The name has repeated, please choose another one");
+                    continue nameRepeat;
+                }
+            }
+            break;
+        }
+        int numberOfGates = ConsoleInput.getInt(
+            String.format(
+                "Enter number of gates (Current: %d): ", 
+                airportToEdit.getNumberOfGates()
+            )
+        );
+        ConsoleInput.clearBuffer();
+
+        if (!location.isBlank())
+            airportToEdit.setLocation(location);
+        if (!state.isBlank())
+            airportToEdit.setState(state);
+        if (!country.isBlank())
+            airportToEdit.setCountry(country);
+        if (!name.isBlank())
+            airportToEdit.setName(name);
+        airportToEdit.setNumberOfGates(numberOfGates);
+        
+        System.out.println("Airport edited successfully!");
+    }
+
 }

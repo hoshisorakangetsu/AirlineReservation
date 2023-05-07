@@ -58,6 +58,7 @@ public class PlaneDriver {
 
     public static void viewPlane() {
         int choice = ConsoleInput.getChoice(planes, "Enter number of the plane to view in detail: ");
+        ConsoleInput.clearBuffer();
         PrettyPrint.printDetailsCard(planes[choice - 1]);
     }
 
@@ -71,6 +72,7 @@ public class PlaneDriver {
                 planeToEdit.getPassengerCapacity()
             )
         );
+        ConsoleInput.clearBuffer();
         String model = ConsoleInput.getString("Enter a model (leave blank to not change): ");
         String manufacturer = ConsoleInput.getString("Enter a manufacturer (leave blank to not change): ");
         String company = ConsoleInput.getString("Enter a company (leave blank to not change): ");
