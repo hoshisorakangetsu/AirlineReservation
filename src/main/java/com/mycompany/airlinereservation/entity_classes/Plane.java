@@ -62,7 +62,7 @@ public class Plane implements Choicer {
         return id;
     }
     public String toString (){
-        return String.format("Passenger Capacity: %d\n Model: %s \n Manufacturer: %s \n Company: %s\n Plane Id: %s\n"+ passengerCapacity, model,manufacturer, company,id);
+        return String.format("Passenger Capacity: %d\nModel: %s \nManufacturer: %s \nCompany: %s\nPlane Id: %s\n", passengerCapacity, model,manufacturer, company,id);
     }
 
     public boolean equals(Object o){

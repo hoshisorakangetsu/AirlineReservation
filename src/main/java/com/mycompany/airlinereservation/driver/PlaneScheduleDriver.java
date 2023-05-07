@@ -76,6 +76,8 @@ public class PlaneScheduleDriver {
         int choice = ConsoleInput.getChoice(schedules, "Which schedule to look at: ");
         ConsoleInput.clearBuffer();
         PrettyPrint.printDetailsCard(schedules[choice - 1]);
+        // block until user decides everything is ok
+        ConsoleInput.getString("Press [enter] to continue");
     }
 
     public static void editSchedule() {

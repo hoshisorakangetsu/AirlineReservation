@@ -15,6 +15,7 @@ import com.mycompany.airlinereservation.util.ShouldNotReachException;
 
 public class AirlineReservation {
 
+    // the way drivers are handled is abit not consistent, our brain was on steroids when coding @_@
     public static void main(String[] args) {
 
         while (true) {
@@ -36,7 +37,7 @@ public class AirlineReservation {
                     AccountDriver.executeOperation(beforeLoginSelection);
                     continue;
                 } else {
-                    break;  // exit from the loop, technically exits the system as well as there are no more code underneath the big while true loop
+                    return;  // returns from the main function, exits the program
                 }
             }
 
@@ -54,38 +55,71 @@ public class AirlineReservation {
                 continue; // if ShouldNotReachExceptionis thrown, 
             }
             // if err is catched this code will be skipped, so it's safe to assume when the code reaches here, menuChoice will alrd have a value
-            // admin driver handles 10 - 15, main handles 16 - 20 by calling the methods provided by AccountDriver, avoiding directly affecting the state of the AccountDriver
+            // 1 - 3 airplane operations
+            // 4 - 6 airport operations
+            // 7 - 9 flight schedule operations
+            // admin driver handles 10 - 15,
+            // main handles 16 - 20 by calling the methods provided by AccountDriver, avoiding directly affecting the state of the AccountDriver
             if (AccountDriver.getLoggedInAccount() instanceof Admin) {
                 // 10 - 15 handled by AdminDriver
                 if (menuChoice >= 10 && menuChoice <= 15) {
                     AccountDriver.AdminDriver.executeOperation(menuChoice);
                     continue;
                 }
-                // 16 - 19 handled by AccountDriver
-                if (menuChoice >= 16 && menuChoice <= 19) {
-                    switch (menuChoice) {
-                        case 16:
-                            AccountDriver.viewAccountDetails();
-                            break;
-                        case 17:
-                            AccountDriver.changeUsername();
-                            break;
-                        case 18:
-                            AccountDriver.changePassword();
-                            break;
-                        case 19:
-                            AccountDriver.logout();
-                            break;
-                    
-                        // should not trigger
-                        default:
-                            break;
-                    }
-                    // done operation, skip to the next iteration of the big while loop to trigger the menu again, let it be login menu (if user logs out) or the normal menu
-                    continue;
+                
+                switch (menuChoice) {
+                    // 1 - 3 handled by AirplaneDriver
+                    case 1:
+                        PlaneDriver.addPlane();
+                        break;
+                    case 2:
+                        PlaneDriver.viewPlane();
+                        break;
+                    case 3:
+                        PlaneDriver.editPlane();
+                        break;
+                    // 4 - 6 handled by AirportDriver
+                    case 4:
+                        AirportDriver.addAirport();
+                        break;
+                    case 5:
+                        AirportDriver.viewAirport();
+                        break;
+                    case 6:
+                        AirportDriver.editAirport();
+                        break;
+                    // 7 - 9 handled by PlaneScheduleDriver
+                    case 7:
+                        PlaneScheduleDriver.addSchedule();
+                        break;
+                    case 8:
+                        PlaneScheduleDriver.viewSchedule();
+                        break;
+                    case 9:
+                        PlaneScheduleDriver.editSchedule();
+                        break;
+                    // 16 - 19 handled by AccountDriver
+                    case 16:
+                        AccountDriver.viewAccountDetails();
+                        break;
+                    case 17:
+                        AccountDriver.changeUsername();
+                        break;
+                    case 18:
+                        AccountDriver.changePassword();
+                        break;
+                    case 19:
+                        AccountDriver.logout();
+                        break;
+                
+                    // should not trigger
+                    default:
+                        break;
                 }
+                // done operation, skip to the next iteration of the big while loop to trigger the menu again, let it be login menu (if user logs out) or the normal menu
+                continue;
             } else if (AccountDriver.getLoggedInAccount() instanceof Customer) {
-                // 1 - 3 handled by ReservationDriver
+                // 1 - 3 handled by ReservationDriver (call methods in main)
                 // 4 - 7 handled by AccountDriver
                 if (menuChoice >= 4 && menuChoice <= 7) {
                     switch (menuChoice) {

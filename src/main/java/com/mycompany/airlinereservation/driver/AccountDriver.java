@@ -191,6 +191,8 @@ public class AccountDriver {
                         "Which customer to view in detail: "
                     );
                     PrettyPrint.printDetailsCard(custs[custSelected - 1]);
+                    // block until user decides everything is ok
+                    ConsoleInput.getString("Press [enter] to continue");
                     break;
                 }
                 // 12 - Edit customer, 15 - edit admin, they both got same implementation
@@ -244,6 +246,8 @@ public class AccountDriver {
                         "Which admin to view in detail: "
                     );
                     PrettyPrint.printDetailsCard(admins[adminSelected - 1]);
+                    // block until user decides everything is ok
+                    ConsoleInput.getString("Press [enter] to continue");
                     break;
                 }
 

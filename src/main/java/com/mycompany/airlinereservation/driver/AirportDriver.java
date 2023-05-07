@@ -63,6 +63,8 @@ public class AirportDriver {
         int choice = ConsoleInput.getChoice(airports, "Enter number of airport to view in detail: ");
         ConsoleInput.clearBuffer();
         PrettyPrint.printDetailsCard(airports[choice - 1]);
+        // block until user decides everything is ok
+        ConsoleInput.getString("Press [enter] to continue");
     }
 
     public static void editAirport() {
