@@ -4,11 +4,13 @@
  */
 package com.mycompany.airlinereservation.entity_classes;
 
+import com.mycompany.airlinereservation.util.Choicer;
+
 /**
  *
  * @author user
  */
-public class Airport {
+public class Airport implements Choicer {
     private String location;
     private String state;
     private String country;
@@ -84,5 +86,9 @@ public class Airport {
             return true;
         else
             return false;
+    }
+
+    public String toChoiceString() {
+        return name + " - " + country;
     }
 }
