@@ -53,14 +53,14 @@ public class ReservationDriver {
             System.out.printf("The total amount is: RM%.2f\n", totalAmount);
             paymentMethod = ConsoleInput.getString("Please enter desired payment method [CASH, CARD, EWALLET]: ", false);
             if (
-                !paymentMethod.toLowerCase().equals("cash") ||
-                !paymentMethod.toLowerCase().equals("card") || 
+                !paymentMethod.toLowerCase().equals("cash") &&
+                !paymentMethod.toLowerCase().equals("card") && 
                 !paymentMethod.toLowerCase().equals("ewallet")
             )
                 System.out.println("Invalid payment option, valid: [CASH, CARD, EWALLET] only");
         } while (
-            !paymentMethod.toLowerCase().equals("cash") ||
-            !paymentMethod.toLowerCase().equals("card") || 
+            !paymentMethod.toLowerCase().equals("cash") &&
+            !paymentMethod.toLowerCase().equals("card") && 
             !paymentMethod.toLowerCase().equals("ewallet")
         );
 
@@ -221,9 +221,16 @@ public class ReservationDriver {
         Customer currentCustomer = (Customer) currentUser;
 
         Reservation[] resMadeByCust = getReservationByCustomer(currentCustomer);
+        if (resMadeByCust == null) {
+            System.out.println("You haven't made any reservations yet, please make one before proceeding");
+            return;
+        }
         int choice = ConsoleInput.getChoice(resMadeByCust, "Which reservation to view?");
 
         PrettyPrint.printDetailsCard(resMadeByCust[choice - 1]);
+        ConsoleInput.reInit();
+        // block until user decides everything is ok
+        ConsoleInput.getString("Press [enter] to continue");
     }
 
     public static void editReservation() throws NoAccessException {
@@ -237,6 +244,10 @@ public class ReservationDriver {
 
         // show the reservation, ask wan edit which reservation
         Reservation[] resMadeByCust = getReservationByCustomer(currentCustomer);
+        if (resMadeByCust == null) {
+            System.out.println("You haven't made any reservations yet, please make one before proceeding");
+            return;
+        }
         int choice = ConsoleInput.getChoice(resMadeByCust, "Which reservation to edit: ");
         Reservation resToEdit = resMadeByCust[choice - 1];  // made possible by the power of java reference, <333
         

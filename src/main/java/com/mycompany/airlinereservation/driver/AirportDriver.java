@@ -68,7 +68,7 @@ public class AirportDriver {
     }
 
     public static void editAirport() {
-        int choice = ConsoleInput.getChoice(airports, null);
+        int choice = ConsoleInput.getChoice(airports, "Enter the airport to edit: ");
         ConsoleInput.reInit();
         Airport airportToEdit = airports[choice - 1];
         String location = ConsoleInput.getString("Enter the location (leave empty to not change): ");
