@@ -36,6 +36,10 @@ public abstract class Payment {
     public double getAmount(){
         return amount;
     }
+
+    public boolean getPaidStatus(){
+        return paidStatus;
+    }
     
     public void setPaymentDate(Date paymentDate){
         this.paymentDate = paymentDate;

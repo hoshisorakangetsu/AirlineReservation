@@ -32,7 +32,7 @@ public class Reservation implements Choicer {
         this.id = "R" + currentID;
         currentID++;
     }
-    public PlaneTicket[] getPlaneTicket(){
+    public PlaneTicket[] getTickets(){
         return tickets;
     }
     public Payment getPay(){

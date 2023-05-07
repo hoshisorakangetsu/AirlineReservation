@@ -12,6 +12,7 @@ import com.mycompany.airlinereservation.entity_classes.PlaneSchedule;
 import com.mycompany.airlinereservation.entity_classes.PlaneTicket;
 import com.mycompany.airlinereservation.entity_classes.Reservation;
 import com.mycompany.airlinereservation.util.ArrayUtils;
+import com.mycompany.airlinereservation.util.ChoiceString;
 import com.mycompany.airlinereservation.util.ConsoleInput;
 import com.mycompany.airlinereservation.util.PrettyPrint;
 import com.mycompany.airlinereservation.util.ShouldNotReachException;
@@ -94,34 +95,34 @@ public class ReservationDriver {
     }
 
     // check if the payment stuff, correct, if false, allow them to change their stuffs
-    private static void makePayment(Payment pt) {
-        if (pt.makePayment()) {
+    private static void makePayment(Payment pay) {
+        if (pay.makePayment()) {
             // if successful, set paymentDate to today and status to true
             System.out.println("Payment successful!");
         }
         else {
             System.out.println("Payment unsuccessful");
             // only card and ewallet will fail
-            if (pt instanceof Card) {
+            if (pay instanceof Card) {
                 boolean retry = Character.toLowerCase(
                     ConsoleInput.getChar("Card is invalid, do you want to change card and retry? [Y/n]: ")
                 ) == 'y';
                 if (retry) {
                     String newCardNo = ConsoleInput.getString("Enter a card number", false);
-                    ((Card) pt).setCardNo(newCardNo);
-                    makePayment(pt); // use the power of recursion, nonid to write loop agn yassssss
+                    ((Card) pay).setCardNo(newCardNo);
+                    makePayment(pay); // use the power of recursion, nonid to write loop agn yassssss
                 }
-            } else if (pt instanceof EWallet) {
+            } else if (pay instanceof EWallet) {
                 boolean retry = Character.toLowerCase(
                     ConsoleInput.getChar("Mobile Number is invalid, do you want to change card and retry? [Y/n]: ")
                 ) == 'y';
                 if (retry) {
                     String newMobileNo = ConsoleInput.getString("Enter a mobile number: ", false);
                     String platform = ConsoleInput.getString("Enter a platform (leave empty to not change): ");
-                    ((EWallet) pt).setMobileNo(newMobileNo);
+                    ((EWallet) pay).setMobileNo(newMobileNo);
                     if (!platform.isBlank())
-                        ((EWallet) pt).setWalletType(platform);
-                    makePayment(pt); // use the power of recursion, nonid to write loop agn yassssss
+                        ((EWallet) pay).setWalletType(platform);
+                    makePayment(pay); // use the power of recursion, nonid to write loop agn yassssss
                 }
             }
         }
@@ -223,6 +224,44 @@ public class ReservationDriver {
         int choice = ConsoleInput.getChoice(resMadeByCust, "Which reservation to view?");
 
         PrettyPrint.printDetailsCard(resMadeByCust[choice - 1]);
+    }
+
+    public static void editReservation() throws NoAccessException {
+        Account currentUser = AccountDriver.getLoggedInAccount();
+        // very unlikely to happen
+        if (!(currentUser instanceof Customer))
+            throw new NoAccessException(currentUser);
+        
+        // here we can already be sure currentUser is Customer
+        Customer currentCustomer = (Customer) currentUser;
+
+        // show the reservation, ask wan edit which reservation
+        Reservation[] resMadeByCust = getReservationByCustomer(currentCustomer);
+        int choice = ConsoleInput.getChoice(resMadeByCust, "Which reservation to edit: ");
+        Reservation resToEdit = resMadeByCust[choice - 1];  // made possible by the power of java reference, <333
+        
+        // 2 thing, edit ticket, or make payment, if the payment has been made, directly show the tickets and only let them edit tickets
+        if (!resToEdit.getPay().getPaidStatus()) {
+            ChoiceString[] choices = new ChoiceString[] {
+                new ChoiceString("Edit ticket"),
+                new ChoiceString("Make Payment"),
+            };
+            int choice2 = ConsoleInput.getChoice(choices, "Enter your choice: ");
+            ConsoleInput.clearBuffer();
+            if (choice2 == 2){
+                makePayment(resToEdit.getPay());  // made possible by java reference <33333333
+                return;
+            }
+        }
+
+        // display all the tickets in the reservation
+        PlaneTicket[] tickets = resToEdit.getTickets();
+        int ticketToEditIdx = ConsoleInput.getChoice(tickets, "Which ticket to edit: ");
+        editTicket(tickets[ticketToEditIdx - 1]);  // <3 u java references
+    }
+
+    public static void editTicket(PlaneTicket pt) {
+        // business rule: if previous is paid using card or ewallet, prompt user that their balance will be deducted if they upgrade, if is paid via cash, tell them to pay on the spot
     }
 
     // lazy make another file for this, this exception only will be thrown in this class anyways
