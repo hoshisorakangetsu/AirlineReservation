@@ -189,6 +189,7 @@ public class AccountDriver {
                         custs, 
                         "Which customer to view in detail: "
                     );
+                    ConsoleInput.reInit();
                     PrettyPrint.printDetailsCard(custs[custSelected - 1]);
                     // block until user decides everything is ok
                     ConsoleInput.getString("Press [enter] to continue");
@@ -203,6 +204,7 @@ public class AccountDriver {
                         accs, 
                         String.format("Which %s to edit: ", ops == 12 ? "CUSTOMER" : "ADMIN")
                     );
+                    ConsoleInput.reInit();
                     // performance isn't concerned, find the original Customer from userAccounts
                     // if not found (which shudn't be, just exit as not possible to continue)
                     int accIndex = ArrayUtils.indexOf(userAccounts, accs[accSelected - 1]);
@@ -233,7 +235,7 @@ public class AccountDriver {
                     if (!newUsername.isBlank()) {
                         account.setPassword(newPassword);
                     }
-                    System.out.printf("%s edited successfully!", ops == 12 ? "CUSTOMER" : "ADMIN");
+                    System.out.printf("%s edited successfully!\n", ops == 12 ? "CUSTOMER" : "ADMIN");
                     break;
                 }
                 case 14: {
@@ -244,6 +246,7 @@ public class AccountDriver {
                         AccountDriver.getAccounts("ADMIN"), 
                         "Which admin to view in detail: "
                     );
+                    ConsoleInput.reInit();
                     PrettyPrint.printDetailsCard(admins[adminSelected - 1]);
                     // block until user decides everything is ok
                     ConsoleInput.getString("Press [enter] to continue");

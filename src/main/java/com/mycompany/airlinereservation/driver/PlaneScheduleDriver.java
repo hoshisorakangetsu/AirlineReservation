@@ -98,7 +98,7 @@ public class PlaneScheduleDriver {
         Date flightDateTime = ConsoleInput.getDateTime(
             String.format(
                 "Enter the flight date time (dd/mm/yyyy HH:mm, Current: %s): ",
-                new SimpleDateFormat("dd/MM/yyyy HH:mm")
+                new SimpleDateFormat("dd/MM/yyyy HH:mm").format(schedToEdit.getFlightDateTime())
             )
         );
         int planeIdx = ConsoleInput.getChoice(
