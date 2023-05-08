@@ -150,12 +150,16 @@ public class ReservationDriver {
         );
         // can determine whether is domestic or 
         PlaneSchedule selectedSchedule = PlaneScheduleDriver.getSchedule(planeSchedChoice - 1);
+        if (selectedSchedule.getSeatsAvailable() < 1) {
+            System.out.println("This schedule has been fully booked, sorry!");
+            return;
+        }
         // check if schedule is domestic or international
         // if not domestic then confirm international
         boolean isDomestic = selectedSchedule.getSrc().isSameCountry(selectedSchedule.getDest());
         // ask how many passengers (create the same number of ticket for it)
         // Not urgent, time's running out, if got time: check if the number do not exceed the plane's capacity - reservation's ticket number
-        int passengerNum = ConsoleInput.getInt("How many passengers: ");
+        int passengerNum = ConsoleInput.getInt("How many passengers: ", 1, selectedSchedule.getSeatsAvailable());
         ConsoleInput.reInit();
 
         // not separating this chunk of code out because can boost performance (use one for loop to perform create tickets and add the sum of the price at once)
@@ -212,6 +216,8 @@ public class ReservationDriver {
         // yes finally can create the reservation object
         Reservation newReservation = new Reservation(tickets, p, currentCustomer);
         reservations = ArrayUtils.appendIntoArray(reservations, newReservation);
+        // reduce the number of seats available by the number of tickets booked
+        selectedSchedule.bookTickets(passengerNum);
         System.out.println("Reservation successfully made!");
     }
 

@@ -23,6 +23,7 @@ public class Plane implements Choicer {
     private String manufacturer;
     private String company;
     private String id;
+    public Plane(){}
     public Plane(int passengerCapacity, String model, String manufacturer, String company, String id){
         this.passengerCapacity=passengerCapacity;
         this.manufacturer=manufacturer;

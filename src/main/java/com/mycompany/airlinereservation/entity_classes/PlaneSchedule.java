@@ -20,17 +20,19 @@ public class PlaneSchedule implements Choicer {
     private Plane plane;
     private boolean visaRequired;
     private double basePrice;
+    private int seatsAvailable; // auto determined
     
     public PlaneSchedule(){}
     
-    public PlaneSchedule(double baggageAllowance, Date flightDate, Airport src, Airport dest, Plane plane, boolean visaRequired, double basePrice){
+    public PlaneSchedule(double baggageAllowance, Date flightDateTime, Airport src, Airport dest, Plane plane, boolean visaRequired, double basePrice){
         this.baggageAllowance = baggageAllowance;
-        this.flightDateTime = flightDate;
+        this.flightDateTime = flightDateTime;
         this.src = src;
         this.dest = dest;
         this.plane = plane;
         this.visaRequired = visaRequired;
         this.basePrice = basePrice;
+        this.seatsAvailable = this.plane.getPassengerCapacity();
     }
     
     public double getBaggageAllowance(){
@@ -60,6 +62,10 @@ public class PlaneSchedule implements Choicer {
     public double getBasePrice(){
         return basePrice;
     }
+
+    public int getSeatsAvailable(){
+        return seatsAvailable;
+    }
     
     public void setBaggageAllowance(double baggageAllowance){
         this.baggageAllowance = baggageAllowance;
@@ -88,6 +94,15 @@ public class PlaneSchedule implements Choicer {
     public void setBasePrice(double basePrice){
         this.basePrice = basePrice;
     }
+
+    public void setSeatAvailable(int seatAvailable){
+        this.seatsAvailable = seatAvailable;
+    }
+
+    // reduce the number of available seats when tickets are booked
+    public void bookTickets(int noOfTickets){
+        this.seatsAvailable -= noOfTickets;
+    }
     
     public String toString(){
         return String.format(
@@ -112,6 +127,6 @@ public class PlaneSchedule implements Choicer {
             new SimpleDateFormat("dd/MMM/yyyy HH:mm").format(flightDateTime) + " " +
             this.src.toChoiceString() + " -> " + this.dest.toChoiceString() + " " +
             this.plane.toChoiceString() + " " +
-            String.format("RM%.2f", this.basePrice);
+            String.format("RM%.2f %d seats available", this.basePrice, this.seatsAvailable);
     }
 }
