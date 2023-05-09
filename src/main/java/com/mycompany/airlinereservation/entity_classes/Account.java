@@ -3,6 +3,7 @@ package com.mycompany.airlinereservation.entity_classes;
 import com.mycompany.airlinereservation.util.ChoiceString;
 import com.mycompany.airlinereservation.util.Choicer;
 
+// even though dh abstract method, objects of this class should not be created, so mark this class as abstract
 public abstract class Account implements Choicer {
 
     private String username;
