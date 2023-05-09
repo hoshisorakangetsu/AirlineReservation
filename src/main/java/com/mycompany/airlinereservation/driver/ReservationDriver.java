@@ -281,7 +281,14 @@ public class ReservationDriver {
 
         // display all the tickets in the reservation
         PlaneTicket[] tickets = resToEdit.getTickets();
-        Choicer[] selections = ArrayUtils.appendIntoArray(tickets, new ChoiceString("Done editing"));
+        Choicer[] selections = new ChoiceString[tickets.length + 1];
+
+        // copy the available tickets to the array called selection (there is no more efficient way to do this becuz ChoiceString cannot be appended to array of type PlaneTicket)
+        for (int i = 0; i < tickets.length; i++) {
+            selections[i] = new ChoiceString(tickets[i].toChoiceString());
+        }
+        // add option to let the user exit
+        selections[selections.length - 1] = new ChoiceString("Done editing");
         int ticketToEditIdx = ConsoleInput.getChoice(selections, "Which ticket to edit: ");
         ConsoleInput.reInit();
         while (ticketToEditIdx != selections.length) {
