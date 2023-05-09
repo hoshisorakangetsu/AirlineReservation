@@ -88,7 +88,7 @@ public class PlaneScheduleDriver {
     }
 
     public static void editSchedule() {
-        int choice = ConsoleInput.getChoice(schedules, "Which schedule to look at: ");
+        int choice = ConsoleInput.getChoice(schedules, "Which schedule to edit: ");
         ConsoleInput.reInit();
         PlaneSchedule schedToEdit = schedules[choice - 1];
 
