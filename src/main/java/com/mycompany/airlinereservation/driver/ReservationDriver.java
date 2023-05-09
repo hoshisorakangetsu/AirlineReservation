@@ -198,7 +198,10 @@ public class ReservationDriver {
                     String passengerIC = ConsoleInput.getString("Enter passenger IC: ");
                     pt = new Domestic(selectedSchedule, seatType, passengerName, passengerAge, price, passengerIC, passengerPassport);
                 } else {
-                    String passengerVisa = ConsoleInput.getString("Enter a passenger VISA: ");
+                    String passengerVisa = null;
+                    if (selectedSchedule.getVisaRequired()) {
+                        passengerVisa = ConsoleInput.getString("Enter a passenger VISA: ");
+                    }
                     pt = new International(selectedSchedule, seatType, passengerName, passengerAge, price, passengerPassport, passengerVisa);
                 }
             } while(!pt.verifyDocuments());

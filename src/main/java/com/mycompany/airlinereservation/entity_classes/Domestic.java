@@ -45,8 +45,11 @@ public class Domestic extends PlaneTicket{
     
     //method to verify is the document complete
     public boolean verifyDocuments(){
-        if(passengerIC != null || super.getPassengerPassport() != null){ //if IC or Passport is available then true
-            if(passengerIC != null){ //if IC is available then check
+        if(
+            (passengerIC != null || super.getPassengerPassport() != null) &&
+            (!passengerIC.isBlank() || !super.getPassengerPassport().isBlank())
+        ){ //if IC or Passport is available then true
+            if(passengerIC != null || !passengerIC.isBlank()){ //if IC is available then check
                 if(passengerIC.length() == 12){ //is the length 12 then check
                     for(int i = 0; i < passengerIC.length(); i++){ //check is all int
                         if(passengerIC.charAt(i)<'0' || passengerIC.charAt(i)>'9'){ //if is < 0 or > 9, not int, charAt returns char, can just compare between chars for easy handling
@@ -67,7 +70,7 @@ public class Domestic extends PlaneTicket{
                 //create pattern from regex
                 Pattern singaporeRegex = Pattern.compile("[A-Za-z][0-9]{7}[A-Za-z]");
                 Pattern chinaRegex = Pattern.compile("[A-Z][0-9]{8,9}");
-                Pattern uKRegex = Pattern.compile("\\d{9}");
+                Pattern uKRegex = Pattern.compile("[0-9]{9}");
                 Pattern malaysiaRegex = Pattern.compile("[A-Z][0-9]{8}");
                 
                 //match regex with passport

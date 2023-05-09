@@ -227,7 +227,7 @@ public class AccountDriver {
                 account.setUsername(newUsername);
             }
             String newPassword = ConsoleInput.getString("Enter new password (leave blank to not change): ");
-            if (!newUsername.isBlank()) {
+            if (!newPassword.isBlank()) {
                 account.setPassword(newPassword);
             }
             System.out.printf("%s edited successfully!\n", type);
