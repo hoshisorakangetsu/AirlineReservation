@@ -280,18 +280,25 @@ public class ReservationDriver {
 
         // display all the tickets in the reservation
         PlaneTicket[] tickets = resToEdit.getTickets();
-        int ticketToEditIdx = ConsoleInput.getChoice(tickets, "Which ticket to edit: ");
+        Choicer[] selections = ArrayUtils.appendIntoArray(tickets, new ChoiceString("Done editing"));
+        int ticketToEditIdx = ConsoleInput.getChoice(selections, "Which ticket to edit: ");
         ConsoleInput.reInit();
-        // deduct the price from the payment first, in case user want to upgrade ticket
-        // this way of handling is better than the other way which requires to loop over the array agn to add the total
-        resToEdit.getPay().setAmount(
-            resToEdit.getPay().getAmount() - tickets[ticketToEditIdx - 1].getPrice()
-        );
-        editTicket(tickets[ticketToEditIdx - 1]);  // <3 u java references
-        // add back the price
-        resToEdit.getPay().setAmount(
-            resToEdit.getPay().getAmount() + tickets[ticketToEditIdx - 1].getPrice()
-        );
+        while (ticketToEditIdx != selections.length) {
+            // deduct the price from the payment first, in case user want to upgrade ticket
+            // this way of handling is better than the other way which requires to loop over the array agn to add the total
+            resToEdit.getPay().setAmount(
+                resToEdit.getPay().getAmount() - tickets[ticketToEditIdx - 1].getPrice()
+            );
+            editTicket(tickets[ticketToEditIdx - 1]);  // <3 u java references
+            // add back the price
+            resToEdit.getPay().setAmount(
+                resToEdit.getPay().getAmount() + tickets[ticketToEditIdx - 1].getPrice()
+            );
+            ticketToEditIdx = ConsoleInput.getChoice(selections, "Which ticket to edit: ");
+            ConsoleInput.reInit();
+        }
+
+        System.out.println("Reservation edited successfully");
     }
 
     public static void editTicket(PlaneTicket pt) {
@@ -356,6 +363,8 @@ public class ReservationDriver {
                 }
             }
         }
+
+        System.out.println("Ticket edited successfully");
     }
 
     // lazy make another file for this, this exception only will be thrown in this class anyways
