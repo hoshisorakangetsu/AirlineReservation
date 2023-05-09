@@ -150,114 +150,120 @@ public class AccountDriver {
     // but it only handles operations like customer details and add new admin or edit admins
     // operations like edit flight or add flight will be handled by respective driver classes
     public static class AdminDriver {
+
+        public static void addAccount(String type) {
+            enterUsername: // label to quit and ask admin to put another username in case username crashed
+            while (true) {
+                String username = ConsoleInput.getString("Enter new username: ");
+                for (Account a : userAccounts) {
+                    if (a.getUsername().equals(username)) {
+                        System.out.println("Username repeated, please select another one");
+                        continue enterUsername;
+                    }
+                }
+
+                String password = ConsoleInput.getString("Enter a password: ");
+
+                // create account
+                Account newAcc = null;
+                if (type.equals("CUSTOMER")) {
+                    newAcc = new Customer(username, password);
+                } else if (type.equals("ADMIN")) {
+                    newAcc = new Admin(username, password);
+                }
+                userAccounts = ArrayUtils.appendIntoArray(userAccounts, newAcc);
+
+                // finished business, exit from this function and return to main flow
+                return;
+            }
+        }
+
+        public static void viewAccount(String type) {
+            // View Customer
+            // flow: show customers in a list of choices, ask which customer to view in detail
+            Choicer[] accs = AccountDriver.getAccounts(type);
+            int accSelected = ConsoleInput.getChoice(
+                accs, 
+                String.format("Which %s to view in detail: ", type.toLowerCase())
+            );
+            ConsoleInput.reInit();
+            PrettyPrint.printDetailsCard(accs[accSelected - 1]);
+            // block until user decides everything is ok
+            ConsoleInput.getString("Press [enter] to continue");
+        }
+
+        public static void editAccount(String type) {
+            // flow: show customers in a list of choices, ask which customer to edit
+            Choicer[] accs = AccountDriver.getAccounts(type);
+            int accSelected = ConsoleInput.getChoice(
+                accs, 
+                String.format("Which %s to edit: ", type)
+            );
+            ConsoleInput.reInit();
+            // performance isn't concerned, find the original Customer from userAccounts
+            // if not found (which shudn't be, just exit as not possible to continue)
+            int accIndex = ArrayUtils.indexOf(userAccounts, accs[accSelected - 1]);
+            if (accIndex < 0 || accIndex > userAccounts.length) {
+                System.out.println("Account not found");
+                return;
+            }
+            Account account = userAccounts[accIndex];
+            String newUsername;
+            usernameRepeat:
+            while (true) {
+                newUsername = ConsoleInput.getString("Enter new username (leave blank to not change): ");
+                if (newUsername.isBlank()) {
+                    break;
+                }
+                for (Account a : userAccounts) {
+                    if (a.getUsername().equals(newUsername)) {
+                        System.out.println("Duplicate username, please select another one");
+                        continue usernameRepeat;
+                    }
+                }
+                break;
+            }
+            if (!newUsername.isBlank()) {
+                account.setUsername(newUsername);
+            }
+            String newPassword = ConsoleInput.getString("Enter new password (leave blank to not change): ");
+            if (!newUsername.isBlank()) {
+                account.setPassword(newPassword);
+            }
+            System.out.printf("%s edited successfully!\n", type);
+        }
+        
         public static void executeOperation(int ops) {
             switch (ops) {
                 // add customer and admin got similar flow at first, so can grup them tgt
                 // 10 - Add Customer, 13 - Add Admin
                 case 10:
                 case 13:
-                    enterUsername: // label to quit and ask admin to put another username in case username crashed
-                    while (true) {
-                        String username = ConsoleInput.getString("Enter new username: ");
-                        for (Account a : userAccounts) {
-                            if (a.getUsername().equals(username)) {
-                                System.out.println("Username repeated, please select another one");
-                                continue enterUsername;
-                            }
-                        }
-
-                        String password = ConsoleInput.getString("Enter a password: ");
-
-                        // create account
-                        Account newAcc = null;
-                        if (ops == 10) {
-                            newAcc = new Customer(username, password);
-                        } else if (ops == 13) {
-                            newAcc = new Admin(username, password);
-                        }
-                        userAccounts = ArrayUtils.appendIntoArray(userAccounts, newAcc);
-
-                        // finished business, exit from this function and return to main flow
-                        return;
+                    if (ops == 10) {
+                        addAccount("CUSTOMER");
+                    } else if (ops == 13) {
+                        addAccount("ADMIN");
                     }
-                // I want this to have own variable scope, lazy think too many variable names
-                case 11: {
-                    // View Customer
-                    // flow: show customers in a list of choices, ask which customer to view in detail
-                    Choicer[] custs = AccountDriver.getAccounts("CUSTOMER");
-                    int custSelected = ConsoleInput.getChoice(
-                        custs, 
-                        "Which customer to view in detail: "
-                    );
-                    ConsoleInput.reInit();
-                    PrettyPrint.printDetailsCard(custs[custSelected - 1]);
-                    // block until user decides everything is ok
-                    ConsoleInput.getString("Press [enter] to continue");
+                    // finish business, exit function
                     break;
-                }
+
+                // 11 - view customer, 14 - view admin
+                case 11: 
+                case 14: 
+                    viewAccount(ops == 11 ? "CUSTOMER" : "ADMIN");
+                    break;                    
                 // 12 - Edit customer, 15 - edit admin, they both got same implementation
                 case 12:
-                case 15: {
-                    // flow: show customers in a list of choices, ask which customer to edit
-                    Choicer[] accs = AccountDriver.getAccounts(ops == 12 ? "CUSTOMER" : "ADMIN");
-                    int accSelected = ConsoleInput.getChoice(
-                        accs, 
-                        String.format("Which %s to edit: ", ops == 12 ? "CUSTOMER" : "ADMIN")
-                    );
-                    ConsoleInput.reInit();
-                    // performance isn't concerned, find the original Customer from userAccounts
-                    // if not found (which shudn't be, just exit as not possible to continue)
-                    int accIndex = ArrayUtils.indexOf(userAccounts, accs[accSelected - 1]);
-                    if (accIndex < 0 || accIndex > userAccounts.length) {
-                        System.out.println("Account not found");
-                        return;
-                    }
-                    Account account = userAccounts[accIndex];
-                    String newUsername;
-                    usernameRepeat:
-                    while (true) {
-                        newUsername = ConsoleInput.getString("Enter new username (leave blank to not change): ");
-                        if (newUsername.isBlank()) {
-                            break;
-                        }
-                        for (Account a : userAccounts) {
-                            if (a.getUsername().equals(newUsername)) {
-                                System.out.println("Duplicate username, please select another one");
-                                continue usernameRepeat;
-                            }
-                        }
-                        break;
-                    }
-                    if (!newUsername.isBlank()) {
-                        account.setUsername(newUsername);
-                    }
-                    String newPassword = ConsoleInput.getString("Enter new password (leave blank to not change): ");
-                    if (!newUsername.isBlank()) {
-                        account.setPassword(newPassword);
-                    }
-                    System.out.printf("%s edited successfully!\n", ops == 12 ? "CUSTOMER" : "ADMIN");
+                case 15: 
+                    editAccount(ops == 12 ? "CUSTOMER" : "ADMIN");
                     break;
-                }
-                case 14: {
-                    // View Admin
-                    // flow: show admin in a list of choices, ask which admin to view in detail
-                    Choicer[] admins = AccountDriver.getAccounts("ADMIN");
-                    int adminSelected = ConsoleInput.getChoice(
-                        AccountDriver.getAccounts("ADMIN"), 
-                        "Which admin to view in detail: "
-                    );
-                    ConsoleInput.reInit();
-                    PrettyPrint.printDetailsCard(admins[adminSelected - 1]);
-                    // block until user decides everything is ok
-                    ConsoleInput.getString("Press [enter] to continue");
-                    break;
-                }
-
+                    
                 // should not reach
                 default:
                     break;
             }
         }
+
     }
 
 }
