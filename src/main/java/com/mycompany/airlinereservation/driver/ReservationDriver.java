@@ -350,6 +350,7 @@ public class ReservationDriver {
         } while (!pt.verifyDocuments());
         // business rule: if previous is paid using card or ewallet, prompt user that their balance will be deducted if they are to be charged, if is paid via cash, tell them to pay on the spot
         if (hasChanged) {
+            // business rule: for ownership transfer, charge on the spot, no add that amount to that ticket
             System.out.printf(
                 "You have made changes to the ticket that is equivalent of an ownership transfer, please pay RM%.2f, \nIf you paid with EWallet or Card previously, please disregard this message as your balance will be automatically deducted\nThanks for your understanding\n",
                 pt.getPrice() * 0.8
