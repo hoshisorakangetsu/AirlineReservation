@@ -359,7 +359,7 @@ public class ReservationDriver {
         if (pt.getSeatType().equals("ECONOMY")) {
             boolean upgrade = Character.toLowerCase(
                 ConsoleInput.getChar("Do you want to upgrade this ticket to business class? [y/n]: ")
-            ) == 'n';
+            ) == 'y';
             if (upgrade) {
                 double oldPrice = pt.getPrice();
                 if (pt.upgrade()) {
