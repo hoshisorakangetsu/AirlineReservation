@@ -30,7 +30,8 @@ public class ReservationDriver {
         return reservations;
     }
 
-    // for the moment this method only used in this driver
+    // for the moment this method only used in this driver to separate logic, else if all this is placed inside a method the method will be too large
+    // and does not comply with the Single responsibility rule
     private static Reservation[] getReservationByCustomer(Customer c) {
         Reservation[] custRes = new Reservation[1];
 
