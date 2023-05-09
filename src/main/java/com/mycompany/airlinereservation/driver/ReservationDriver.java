@@ -310,7 +310,9 @@ public class ReservationDriver {
         System.out.println("Reservation edited successfully");
     }
 
-    public static void editTicket(PlaneTicket pt) {
+    // only used in this method to separate out the logic from the method
+    // should not be called individually outside of this driver, should only be called by the editReservation method
+    private static void editTicket(PlaneTicket pt) {
         // ask everything haha
         String passengerName = ConsoleInput.getString("Enter passenger name (leave empty to not change): ");
         int passengerAge = ConsoleInput.getInt(
