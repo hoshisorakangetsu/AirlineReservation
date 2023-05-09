@@ -50,7 +50,7 @@ public class AccountDriver {
             // return from function if user dw to try again
             if(
                 Character.toLowerCase(
-                    ConsoleInput.getChar("Invalid credentials, try again? [Y/n]: ")
+                    ConsoleInput.getChar("Invalid credentials, try again? [y/n]: ")
                 ) != 'y'
             ) return;
         }

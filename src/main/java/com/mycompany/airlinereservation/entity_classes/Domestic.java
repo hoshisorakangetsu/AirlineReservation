@@ -49,7 +49,7 @@ public class Domestic extends PlaneTicket{
             (passengerIC != null || super.getPassengerPassport() != null) &&
             (!passengerIC.isBlank() || !super.getPassengerPassport().isBlank())
         ){ //if IC or Passport is available then true
-            if(passengerIC != null || !passengerIC.isBlank()){ //if IC is available then check
+            if(passengerIC != null && !passengerIC.isBlank()){ //if IC is available then check
                 if(passengerIC.length() == 12){ //is the length 12 then check
                     for(int i = 0; i < passengerIC.length(); i++){ //check is all int
                         if(passengerIC.charAt(i)<'0' || passengerIC.charAt(i)>'9'){ //if is < 0 or > 9, not int, charAt returns char, can just compare between chars for easy handling
@@ -61,6 +61,7 @@ public class Domestic extends PlaneTicket{
                     return true;
                 }else{ //length is not 12
                     System.out.println("IC is invalid");
+                    return false;
                 }
             }else{ //check passport
                 if (super.getPassengerPassport() == null || super.getPassengerPassport().isBlank()){
@@ -96,8 +97,8 @@ public class Domestic extends PlaneTicket{
             }
         }
         
-        //if all the above checks failed
-        System.out.println("IC and passport is invalid");
+        //if all the above checks failed (should not be reach, put for sanity check)
+        System.out.println("IC or passport is required");
         return false; //return false as fail
     }
 }

@@ -54,11 +54,15 @@ public class PlaneScheduleDriver {
         Date flightDateTime = ConsoleInput.getDateTime("Enter the flight date time (dd/mm/yyyy HH:mm): ");
         int srcAirportIdx = ConsoleInput.getChoice(AirportDriver.getAirports(), "Enter number of the source airport: ");
         int destAirportIdx = ConsoleInput.getChoice(AirportDriver.getAirports(), "Enter number of the destination airport: ");
+        while (destAirportIdx == srcAirportIdx) {
+            System.out.println("Source airport cannot be the same as destination airport");
+            destAirportIdx = ConsoleInput.getChoice(AirportDriver.getAirports(), "Enter number of the destination airport: ");
+        }
         int planeIdx = ConsoleInput.getChoice(PlaneDriver.getPlanes(), "Enter number of the plane: ");
         double basePrice = ConsoleInput.getDouble("Enter the base price for the tickets: RM");
         ConsoleInput.reInit();
         boolean visaRequired = Character.toLowerCase(
-            ConsoleInput.getChar("Is visa required? [Y/n]: ")
+            ConsoleInput.getChar("Is visa required? [y/n]: ")
         ) == 'y';
 
         // create the schedule

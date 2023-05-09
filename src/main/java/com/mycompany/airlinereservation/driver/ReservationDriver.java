@@ -86,7 +86,7 @@ public class ReservationDriver {
         }
 
         boolean payNow = Character.toLowerCase(
-            ConsoleInput.getChar("Pay now? [Y/n]: ")
+            ConsoleInput.getChar("Pay now? [y/n]: ")
         ) == 'y';
 
         if (payNow) {
@@ -109,7 +109,7 @@ public class ReservationDriver {
             // only card and ewallet will fail
             if (pay instanceof Card) {
                 boolean retry = Character.toLowerCase(
-                    ConsoleInput.getChar("Card is invalid, do you want to change card and retry? [Y/n]: ")
+                    ConsoleInput.getChar("Card is invalid, do you want to change card and retry? [y/n]: ")
                 ) == 'y';
                 if (retry) {
                     String newCardNo = ConsoleInput.getString("Enter a card number: ", false);
@@ -118,7 +118,7 @@ public class ReservationDriver {
                 }
             } else if (pay instanceof EWallet) {
                 boolean retry = Character.toLowerCase(
-                    ConsoleInput.getChar("Mobile Number is invalid, do you want to change card and retry? [Y/n]: ")
+                    ConsoleInput.getChar("Mobile Number is invalid, do you want to change card and retry? [y/n]: ")
                 ) == 'y';
                 if (retry) {
                     String newMobileNo = ConsoleInput.getString("Enter a mobile number: ", false);
@@ -182,7 +182,7 @@ public class ReservationDriver {
             ConsoleInput.reInit();
             double price = selectedSchedule.getBasePrice();
             boolean isBusinessClass = Character.toLowerCase(
-                ConsoleInput.getChar("Upgrade to business class (add 40% to the base ticket price)? [y/N]: ")
+                ConsoleInput.getChar("Upgrade to business class (add 40% to the base ticket price)? [y/n]: ")
             ) == 'y';
             String seatType = "ECONOMY";
             if (isBusinessClass) {
@@ -343,7 +343,7 @@ public class ReservationDriver {
 
         if (pt.getSeatType().equals("ECONOMY")) {
             boolean upgrade = Character.toLowerCase(
-                ConsoleInput.getChar("Do you want to upgrade this ticket to business class? [y/N]: ")
+                ConsoleInput.getChar("Do you want to upgrade this ticket to business class? [y/n]: ")
             ) == 'n';
             if (upgrade) {
                 double oldPrice = pt.getPrice();
