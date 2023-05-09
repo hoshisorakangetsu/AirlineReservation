@@ -79,8 +79,9 @@ public class AccountDriver {
                 // register a customer account for the user, admin accounts should never be able to be registered on its own
                 Customer newCust = new Customer(username, password);
                 userAccounts = ArrayUtils.appendIntoArray(userAccounts, newCust);
-                return;  // done registering, return from the function
+                System.out.println("Registered successfully, please login");
 
+                return;  // done registering, return from the function
             } catch (AccountRegisteredException accRegE) {
                 System.out.println(accRegE.getMessage());
                 System.out.println("Please select another one");
@@ -172,6 +173,8 @@ public class AccountDriver {
                     newAcc = new Admin(username, password);
                 }
                 userAccounts = ArrayUtils.appendIntoArray(userAccounts, newAcc);
+
+                System.out.println("Add account successfully");
 
                 // finished business, exit from this function and return to main flow
                 return;

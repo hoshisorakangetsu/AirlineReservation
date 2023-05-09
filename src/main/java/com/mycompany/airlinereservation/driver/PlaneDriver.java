@@ -54,6 +54,7 @@ public class PlaneDriver {
         }
         Plane newPlane = new Plane(passengerCapacity, model, manufacturer, company, id);
         planes = ArrayUtils.appendIntoArray(planes, newPlane);
+        System.out.println("Plane added successfully");
     }
 
     public static void viewPlane() {

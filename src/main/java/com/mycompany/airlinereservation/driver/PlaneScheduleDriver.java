@@ -76,6 +76,7 @@ public class PlaneScheduleDriver {
         );
 
         schedules = ArrayUtils.appendIntoArray(schedules, newSched);
+        System.out.println("Schedule added successfully");
     }
 
     public static void viewSchedule() {

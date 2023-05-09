@@ -42,7 +42,7 @@ public class AirportDriver {
         // name is unique
         nameRepeat:
         while (true) {
-            name = ConsoleInput.getString("Enter the name of the new airport (IATA abbr)", false);
+            name = ConsoleInput.getString("Enter the name of the new airport (IATA abbr): ", false);
             for (Airport a : airports) {
                 if (a.getName().equals(name)) {
                     System.out.println("The name has repeated, please choose another one");
@@ -57,6 +57,7 @@ public class AirportDriver {
         // create the new airport
         Airport newAirport = new Airport(location, state, country, name, numberOfGates);
         airports = ArrayUtils.appendIntoArray(airports, newAirport);
+        System.out.println("Airport created successfully");
     }
 
     public static void viewAirport() {
@@ -78,7 +79,7 @@ public class AirportDriver {
         // name is unique
         nameRepeat:
         while (true) {
-            name = ConsoleInput.getString("Enter the name (IATA abbr, leave empty to not change)");
+            name = ConsoleInput.getString("Enter the name (IATA abbr, leave empty to not change): ");
             if (name.isBlank())
                 break;
             for (Airport a : airports) {
