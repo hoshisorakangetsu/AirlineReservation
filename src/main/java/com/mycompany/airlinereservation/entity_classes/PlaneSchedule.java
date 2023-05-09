@@ -106,7 +106,7 @@ public class PlaneSchedule implements Choicer {
     
     public String toString(){
         return String.format(
-            "Baggage Allowance : %.2fkg\nFlight Date Time : %s\nFrom : \n%s\nTo : \n%s\nPlane : \n%s\nVisa Required : \n%s\nBase Price : RM%.2f\n", 
+            "Baggage Allowance : %.2fkg\nFlight Date Time : %s\nFrom : \n%s\nTo : \n%s\nPlane : \n%s\nVisa Required : %s\nBase Price : RM%.2f\n", 
             baggageAllowance,
             new SimpleDateFormat("dd/MMM/yyyy HH:mm").format(flightDateTime),
             src.toString(), dest.toString(), plane.toString(), visaRequired ? "yes" : "no", basePrice
