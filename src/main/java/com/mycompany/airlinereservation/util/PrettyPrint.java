@@ -126,4 +126,39 @@ public class PrettyPrint {
         // close the "card"
         PrettyPrint.printHorizontalLine(horizontalWidth);
     }
+
+    public static void printBanner() {
+        String plane = """
+             _____
+            _\\ _~-\\___
+    =  = ==(____AA____D
+                \\_____\\___________________,-~~~~~~~`-.._
+                /     o O o o o o O O o o o o o o O o  |\\_
+                `~-.__        ___..----..                  )
+                      `---~~\\___________/------------`````
+                      =  ===(_________D   
+
+        """;
+        String[] planeStrArr = plane.split("\n");
+        int planeLineLength = longestString(planeStrArr).length();
+
+        // top bar
+        printHorizontalLine(planeLineLength + 4);  // + "| " + " |"
+        // print top padding
+        System.out.println("| " + padRight(" ", planeLineLength) + " |");
+        // plane itself
+        for (String s : planeStrArr) {
+            System.out.println("| " + padRight(s, planeLineLength) + " |");
+        }
+        // add bottom padding for the plane
+        System.out.println("| " + padRight(" ", planeLineLength) + " |");
+        // show message
+        System.out.println("| " + centerString("Welcome to Anirlines Reserveration System", planeLineLength) + " |");
+        // add bottom padding for the message
+        System.out.println("| " + padRight(" ", planeLineLength) + " |");
+        // bottom bar
+        printHorizontalLine(planeLineLength + 4);
+        System.out.print("\n");
+    }
+
 }

@@ -42,4 +42,11 @@ public class Admin extends Account {
         return super.toString() + "Role       : Admin\n";
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Admin))
+            return false;
+        return super.equals(o);
+    }
+
 }

@@ -6,6 +6,7 @@ import com.mycompany.airlinereservation.entity_classes.Account;
 import com.mycompany.airlinereservation.entity_classes.Admin;
 import com.mycompany.airlinereservation.entity_classes.Customer;
 import com.mycompany.airlinereservation.util.ConsoleInput;
+import com.mycompany.airlinereservation.util.PrettyPrint;
 import com.mycompany.airlinereservation.util.ShouldNotReachException;
 
 public class AirlineReservation {
@@ -13,6 +14,7 @@ public class AirlineReservation {
     // the way drivers are handled is abit not consistent, our brain was on steroids when coding @_@
     public static void main(String[] args) {
         while (true) {
+            PrettyPrint.printBanner();
             // flow
             // check if user is logged in, if not logged in, 
             // ask user 1. login, 2. register 3. exit system
