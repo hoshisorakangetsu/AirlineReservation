@@ -14,27 +14,27 @@ public class PlaneScheduleDriver {
         new PlaneSchedule(
             30.0, new Date(2023 - 1900, 5, 15, 10, 0), 
             AirportDriver.getAirport(0), AirportDriver.getAirport(4), 
-            PlaneDriver.getPlane(0), false, 200.00
+            PlaneDriver.getPlane(0), false, 300.00
         ),
         new PlaneSchedule(
             25.0, new Date(2023 - 1900, 5, 16, 8, 30), 
             AirportDriver.getAirport(4), AirportDriver.getAirport(0), 
-            PlaneDriver.getPlane(1), false, 200.00
+            PlaneDriver.getPlane(1), false, 300.00
         ),
         new PlaneSchedule(
             20.0, new Date(2023 - 1900, 5, 17, 2, 45), 
             AirportDriver.getAirport(2), AirportDriver.getAirport(6), 
-            PlaneDriver.getPlane(5), true, 200.00
+            PlaneDriver.getPlane(5), true, 1200.00
         ),
         new PlaneSchedule(
             15.0, new Date(2023 - 1900, 5, 21, 19, 30), 
             AirportDriver.getAirport(3), AirportDriver.getAirport(1), 
-            PlaneDriver.getPlane(3), false, 200.00
+            PlaneDriver.getPlane(3), false, 220.00
         ),
         new PlaneSchedule(
             10.0, new Date(2023 - 1900, 6, 10, 23, 35), 
             AirportDriver.getAirport(5), AirportDriver.getAirport(12), 
-            PlaneDriver.getPlane(8), true, 200.00
+            PlaneDriver.getPlane(8), true, 1500.00
         ),
     };
 
