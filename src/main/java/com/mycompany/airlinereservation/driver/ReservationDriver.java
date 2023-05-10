@@ -179,6 +179,7 @@ public class ReservationDriver {
         for (int i = 0; i < passengerNum; i++) {
             // repeatedly get information of the passenger until verify successes
             PlaneTicket pt;
+            System.out.println("\nDetails for passenger #" + (i + 1));
             String passengerName = ConsoleInput.getString("Enter passenger name: ", false);
             int passengerAge = ConsoleInput.getInt("Enter passenger age: ", 1, 130);
             ConsoleInput.reInit();

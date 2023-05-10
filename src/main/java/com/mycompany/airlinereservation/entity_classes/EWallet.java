@@ -62,6 +62,9 @@ public class EWallet extends Payment{
     }
     
     public boolean equals(Object o){
+        if (!(o instanceof EWallet)) {
+            return false;
+        }
         EWallet wallet = (EWallet)o; //downcasting
         if(wallet.mobileNo.equals(mobileNo)) //equals()-->String values
             return true;

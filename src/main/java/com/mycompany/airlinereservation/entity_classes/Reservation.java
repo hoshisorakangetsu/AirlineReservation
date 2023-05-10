@@ -76,6 +76,13 @@ public class Reservation implements Choicer {
     // can based on the schedule, which is on the tickets to make a selection
     public String toChoiceString(){
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
-        return sdf.format(dateCreated) + " " + tickets[0].getSched().toChoiceString();
+        return sdf.format(dateCreated) + 
+            " " + 
+            String.format(
+                "%s -> %s, %d passengers ", 
+                tickets[0].getSched().getSrc().toChoiceString(), 
+                tickets[0].getSched().getDest().toChoiceString(), 
+                tickets.length
+            );
     }
 }

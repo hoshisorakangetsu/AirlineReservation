@@ -114,6 +114,9 @@ public class PlaneSchedule implements Choicer {
     }
     
     public boolean equals(Object o){
+        if (!(o instanceof PlaneSchedule)) {
+            return false;
+        }
         PlaneSchedule schedule = (PlaneSchedule)o; //downcasting
         if(schedule.flightDateTime.equals(flightDateTime)) //equals()-->String values
             return true;

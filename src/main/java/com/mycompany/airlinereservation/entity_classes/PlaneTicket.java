@@ -91,6 +91,9 @@ public abstract class PlaneTicket implements Choicer {
     }
     
     public boolean equals(Object o){
+        if (!(o instanceof PlaneTicket)) {
+            return false;
+        }
         PlaneTicket planeTicket = (PlaneTicket)o;
         if(planeTicket.id.equals(id))
             return true;

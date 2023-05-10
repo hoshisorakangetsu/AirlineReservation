@@ -66,6 +66,9 @@ public abstract class Payment {
     }
     
     public boolean equals(Object o){
+        if (!(o instanceof Payment)) {
+            return false;
+        }
         Payment paid = (Payment)o; //downcasting
         if(paid.paymentDate.equals(paymentDate)) //equals()-->String values
             return true;

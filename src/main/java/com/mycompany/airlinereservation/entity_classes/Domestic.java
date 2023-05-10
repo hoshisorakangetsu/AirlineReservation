@@ -36,9 +36,8 @@ public class Domestic extends PlaneTicket{
     }
     
     public boolean equals(Object o){
-        Domestic sched = (Domestic)o;
-        if(sched.passengerIC.equals(passengerIC))
-            return true;
+        if (o instanceof Domestic) 
+            return super.equals(o);
         else 
             return false;
     }
