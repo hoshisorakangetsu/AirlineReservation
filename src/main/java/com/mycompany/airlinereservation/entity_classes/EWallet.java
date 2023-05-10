@@ -10,6 +10,7 @@ package com.mycompany.airlinereservation.entity_classes;
  */
 import java.util.Date;
 public class EWallet extends Payment{
+    //variable
     private String mobileNo;
     private String walletType;
     
@@ -27,6 +28,7 @@ public class EWallet extends Payment{
         this.walletType = walletType;
     }
     
+    //if there is any non-number value in the mobile number it will return false
     public boolean verifyMobile(){
         try{
             Integer.parseInt(this.mobileNo);
@@ -37,6 +39,7 @@ public class EWallet extends Payment{
         return true;
     }
     
+    //getter
     public String getMobileNo(){
         return mobileNo;
     }
@@ -45,6 +48,7 @@ public class EWallet extends Payment{
         return walletType;
     }
     
+    //setter
     public void setMobileNo(String mobileNo){
         this.mobileNo = mobileNo;
     }
@@ -64,6 +68,7 @@ public class EWallet extends Payment{
         else
             return false;
     }
+    
     // if mobileNo is valid then pay success
     public boolean makePayment(){
         if(verifyMobile())
