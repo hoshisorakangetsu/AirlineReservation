@@ -11,6 +11,7 @@ import com.mycompany.airlinereservation.util.Choicer;
  * @author user
  */
 public class Airport implements Choicer {
+    //variable
     private String location;
     private String state;
     private String country;
@@ -27,6 +28,7 @@ public class Airport implements Choicer {
         this.numberOfGates = numberOfGates;
     }
     
+    //getter
     public String getLocation(){
         return location;
     }
@@ -47,6 +49,7 @@ public class Airport implements Choicer {
         return numberOfGates;
     }
     
+    //setter
     public void setLocation(String location){
         this.location = location;
     }

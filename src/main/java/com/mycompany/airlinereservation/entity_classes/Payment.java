@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
  */
 import java.util.Date;
 public abstract class Payment {
+    //variable
     private Date paymentDate;
     private double amount;
     private boolean paidStatus;
@@ -29,6 +30,7 @@ public abstract class Payment {
         this.paidStatus = false;
     }
     
+    //getter
     public Date getPaymentDate(){
         return paymentDate;
     }
@@ -41,6 +43,7 @@ public abstract class Payment {
         return paidStatus;
     }
     
+    //setter
     public void setPaymentDate(Date paymentDate){
         this.paymentDate = paymentDate;
     }

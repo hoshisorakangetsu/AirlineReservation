@@ -13,6 +13,7 @@ import java.util.Date;
 
 import com.mycompany.airlinereservation.util.Choicer;
 public class PlaneSchedule implements Choicer {
+    //variable
     private double baggageAllowance;
     private Date flightDateTime;
     private Airport src;
@@ -35,6 +36,7 @@ public class PlaneSchedule implements Choicer {
         this.seatsAvailable = this.plane.getPassengerCapacity();
     }
     
+    //getter
     public double getBaggageAllowance(){
         return baggageAllowance;
     }
@@ -67,6 +69,7 @@ public class PlaneSchedule implements Choicer {
         return seatsAvailable;
     }
     
+    //setter
     public void setBaggageAllowance(double baggageAllowance){
         this.baggageAllowance = baggageAllowance;
     }
