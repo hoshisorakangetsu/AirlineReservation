@@ -26,3 +26,5 @@ Just import open this folder with netbeans 14 should work
 - Xuan Bin
   - [hanyue1014](https://github.com/hanyue1014)
   - [hoshisorakangetsu](https://github.com/hoshisorakangetsu)
+- [Soon Chee](https://github.com/ac3019)
+- Yi Hoong
